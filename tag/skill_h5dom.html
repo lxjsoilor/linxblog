@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+
+    <title>Linx Blog</title>
+
+    <!-- Web App Manifest -->
+    <style>
+        .container p {
+            text-indent: 2em;
+        }
+    </style>
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="/img/favicon.ico"> -->
+
+    <!-- Canonical URL -->
+    <!-- <link rel="canonical" href="https://huangxuan.me/2015/04/14/unix-linux-note/"> -->
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="../css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+
+<body ontouchstart="">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="/">Linx Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="huxblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="../index.html">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="../about.html">About</a>
+                        </li>
+                        <!-- 
+                        <li>
+                            <a href="/portfolio/">Portfolio</a>
+                        </li> -->
+
+                        <li>
+                            <a href="../tags.html">Tags</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#huxblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __HuxNav__ = {
+            close: function() {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function() {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function() {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function(e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __HuxNav__.close()
+            } else {
+                __HuxNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close HuxNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function(e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __HuxNav__.close();
+        })
+    </script>
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+    <!-- <img src="/img/post-bg-unix-linux.jpg" width="0" height="0"> -->
+
+    <!-- Post Header -->
+    <style type="text/css">
+        header.intro-header {
+            position: relative;
+            background-image: url('../img/post-bg-unix-linux2.jpg')
+        }
+    </style>
+    <header class="intro-header">
+        <div class="header-mask"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <div class="tags">
+
+                            <!-- <a class="tag" href="javascript:;" title="OS">git版本控制</a> -->
+
+                            <!-- <a class="tag" href="javascript:;" title="Unix">分布式</a> -->
+
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
+
+                        </div>
+                        <h1>H5部分新特性笔记</h1>
+
+
+                        <!-- <h2 class="subheading">canvas+js+ps模块化制作双人射击小游戏</h2> -->
+
+                        <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                    <h1>H5部分新特性</h1>
+                    <h4><a href="javascript:;">#</a>网络状态</h4>
+                    <ul>
+                        <li>navigator.online</li>
+                        <li>事件 online 连接上网的时候触发</li>
+                        <li>事件 offline 断开网络的时候触发</li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>地理位置</h4>
+                    <ul>
+                        <li>avigator.geolocation.getCurrentPosition 接受三个参数 (获取成功的回调，失败的回调,配置参数) (success,error,{enableHighAccuracy(是否获取高精度):true,timeout(超时时间 ms),maximumAge(重新获取地理位置的时间 ms)})</li>
+                        <li>success(position)成功的回调
+                            <ul>
+                                <li>postion.coords.latitude 纬度</li>
+                                <li>postion.coords.longitude 经度</li>
+                                <li>postion.coords.accuracy 精度-精确到多少米</li>
+                                <li>postion.coords.altitude 海拔高度(支持程度不够)</li>
+                            </ul>
+                        </li>
+                        <li>error(err) 失败的回调
+                            <ul>
+                                <li>code 状态值
+                                    <ul>
+                                        <li>1&nbsp;用户拒绝</li>
+                                        <li>2&nbsp;获取不到信息</li>
+                                        <li>3&nbsp;超时</li>
+                                    </ul>
+                                </li>
+                                <li>message 提示信息</li>
+                            </ul>
+                        </li>
+                        <li>opctions(可选) 设置信息
+                            <ul>
+                                <li>enableHighAccuracy 是否要求高精度-默认true</li>
+                                <li>timeout 超时时间设置-毫秒</li>
+                                <li>maximumAge 地理位置信息缓存有效时间</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>储存</h4>
+                    <ul>
+                        <li>cookie
+                            <ul>
+                                <li>容量为3k左右</li>
+                                <li>cookie在js当中只是一个普通的字符串</li>
+                                <li>要以服务器的形式打开</li>
+                                <li>关闭浏览器还可以存在</li>
+                                <li>每一次发送请求自己带上-不安全</li>
+                                <li>只和当前网站有关-不能跨网站访问</li>
+                                <li>记住密码</li>
+                                <li>document.cookie读取cookie</li>
+                                <li>js操作cookie</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <pre>
+            //写入cookie
+            function setCookie(name, value) {
+                var Days = 30;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+                document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+                }
+                    </pre>
+                    <pre>
+            function getCookie(name) {
+                var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+                if (arr = document.cookie.match(reg)) {
+                    return unescape(arr[2]);
+                }
+                return null;
+                }
+                    </pre>
+                    <pre>
+            function delCookie(name) {
+                var exp = new Date();
+                exp.setTime(exp.getTime() - 1);
+                var cval = getCookie(name);
+                if (cval != null) {
+                    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+                }
+                }
+                    </pre>
+                    <h4><a href="javascript:;">#</a>jq操作cookie-->jq.cookie</h4>
+                    <ul>
+                        <li>读取 $.cookie("name")</li>
+                        <li>写入 $.cookie("name","value",{expires:7});</li>
+                        <li>删除 $.cookie("name",null);</li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>sesstionStorage</h4>
+                    <ul>
+                        <li>大小约为5M</li>
+                        <li>存在于当前会话中</li>
+                        <li>点击超链接后还存在</li>
+                        <li>关闭当前页面,浏览器就不再存在</li>
+                        <li>页面权限验证</li>
+                        <li>方法
+                            <ul>
+                                <li>getItem</li>
+                                <li>setItem</li>
+                                <li>removeItem</li>
+                                <li>clear</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>localStorage</h4>
+                    <ul>
+                        <li>大小为20M</li>
+                        <li>关闭浏览器还存在</li>
+                        <li>每一次发送请求不会带上</li>
+                        <li>getItem</li>
+                        <li>setItem</li>
+                        <li>removeItem</li>
+                        <li>clear</li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>web字体</h4>
+                    <ul>
+                        <li>不会失真</li>
+                        <li>可操作性更高</li>
+                        <li>主流制作图标的方式</li>
+                        <li>使用步骤
+                            <ul>
+                                <li>引用字体</li>
+                                <li>声明字体</li>
+                                <li>引用class</li>
+                                <li>元素中使用class</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>全屏</h4>
+                    <ul>
+                        <li>谷歌 webkitRequestPullScreen</li>
+                        <li>火狐 mozRequestPullScreen</li>
+                        <li>ie msRequestPullscreen</li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>file</h4>
+                    <ul>
+                        <li>新的file对象 new FileReader()</li>
+                        <li>fileReader.readAsText() 当作文本读取</li>
+                        <li>fileReader.readAsDataURL 读取文件的路径 图片、视频、音乐</li>
+                        <li>fileReader.readAsBinaryString 读取文件的二进制码</li>
+                        <li>fileReader.onload 读取文件结束后执行</li>
+                        <li>fileReader.result 在onload中 获取读取完的文件的结果</li>
+                    </ul>
+                    <h4><a href="javascript:;">#</a>拖拽</h4>
+                    <ul>
+                        <li>被拖拽的元素
+                            <ul>
+                                <li>ondragstart 开始拖拽的时候</li>
+                                <li>ondrag 拖拽移动的时候</li>
+                                <li>ondragleave 拖拽的时候 离开自身的范围</li>
+                                <li>ondragend 拖拽松开手指的时候</li>
+                            </ul>
+                        </li>
+                        <li>舞台元素（用来安放被拖拽元素的盒子）
+                            <ul>
+                                <li>ondragenter 被拖拽的元素进入舞台的时候</li>
+                                <li>ondragover 被拖拽的元素在舞台上移动的时候</li>
+                                <li>ondragleave 被拖拽的元素离开舞台上的时候</li>
+                                <li>ondrop 被拖拽的元素在舞台上松开手指的时候</li>
+                                <li>e.dataTransfer 获取被拖拽的目标元素（图片-文件等）</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
+
+                    <!--  -->
+                    <hr style="visibility: hidden;">
+
+
+                    <ul class="pager">
+
+                        <li class="previous">
+                            <a href="/2015/03/31/e2e_user_scenarios/" data-toggle="tooltip" data-placement="top" title="Definition of End to End User Scenarios">
+                        Previous<br>
+                        <span>Definition of End to End User Scenarios</span>
+                        </a>
+                        </li>
+
+
+                        <li class="next">
+                            <a href="/2015/04/15/os-metro/" data-toggle="tooltip" data-placement="top" title="hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇">
+                        Next<br>
+                        <span>hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇</span>
+                        </a>
+                        </li>
+
+                    </ul>
+
+
+
+                    <!-- disqus 评论框 start -->
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                    <!-- disqus 评论框 end -->
+
+                </div>
+
+                <!-- Side Catalog Container -->
+
+                <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                    <div class="side-catalog">
+                        <hr class="hidden-sm hidden-xs">
+                        <h5>
+                            <a class="catalog-toggle" href="#">CATALOG</a>
+                        </h5>
+                        <ul class="catalog-body"></ul>
+                    </div>
+                </div>
+
+
+                <!-- Sidebar Container -->
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+
+                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+
+                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+
+                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+
+
+
+    <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+    <!--   <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = "hux";
+        var disqus_identifier = "/2015/04/14/unix-linux-note";
+        var disqus_url = "https://huangxuan.me/2015/04/14/unix-linux-note/";
+
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> -->
+    <!-- disqus 公共JS代码 end -->
+
+
+
+
+    <!-- async load function -->
+    <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script>
+    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+    <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
+            anchors.options = {
+                visible: 'always',
+                placement: 'right',
+                icon: '#'
+            };
+            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+        })
+    </script>
+    <style>
+        /* place left on bigger screen */
+        
+        @media all and (min-width: 800px) {
+            .anchorjs-link {
+                position: absolute;
+                left: -0.75em;
+                font-size: 1.1em;
+                margin-top: -0.1em;
+            }
+        }
+    </style>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.min.js "></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+    <script src="../js/bootstrap.min.js "></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/hux-blog.min.js "></script>
+
+    <!-- Service Worker -->
+
+    <script src="../js/snackbar.js "></script>
+    <script src="../js/sw-registration.js "></script>
+
+</body>
+
+</html>
