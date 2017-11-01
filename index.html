@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+
+    <title>Linx Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="./manifest.json">
+
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="/img/favicon.ico"> -->
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://huangxuan.me/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="./css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+
+<body ontouchstart="">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="javascript:;">Linx Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="huxblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="./index.html">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="./about.html">About</a>
+                        </li>
+
+                        <li>
+                            <a href="./tags.html">Tags</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#huxblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __HuxNav__ = {
+            close: function() {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function() {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function() {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function(e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __HuxNav__.close()
+            } else {
+                __HuxNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close HuxNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function(e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __HuxNav__.close();
+        })
+    </script>
+
+
+    <!-- Page Header -->
+    <header class="intro-header" style="background-image: url('./img/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                    <div class="site-heading">
+                        <h1>Linx Blog</h1>
+                        <hr class="small">
+                        <span class="subheading">写写代码，做做设计</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+
+
+            <!-- USE SIDEBAR -->
+            <!-- PostList Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+
+                <div class="post-preview">
+                    <a href="./game_zombie.html" target="_blank">
+                        <div style="float:left;margin-right:20px">
+                            <img width="150px" src="./img/gametitle.jpg" alt="..." class="img-thumbnail">
+                        </div>
+                        <div>
+                            <h2 class="post-title">
+                                模块化制作双人射击游戏
+                            </h2>
+
+                            <h3 class="post-subtitle">
+                                Canvas+Js+Ps
+                            </h3>
+
+                            <div class="post-content-preview">
+
+
+
+
+
+                                看周围的朋友，经常在业余时间搞自己的小作品，小游戏。感觉自己也不能落伍，再加上大飞哥模块化开发会飞的小鸟的影响。我决定自己也来做个游戏，并且用到了大飞哥模块化开发的思路...
+                            </div>
+                        </div>
+                    </a>
+                    <p class="post-meta">
+                        Posted by Linx on July 12, 2017
+                    </p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="./game_zombie.html" target="_blank">
+                        <h2 class="post-title">
+                            webpack使用文档
+                        </h2>
+
+                        <h3 class="post-subtitle">
+                            webpack简单的使用记录
+                        </h3>
+
+                        <div class="post-content-preview">
+                            webpack是一个资源的打包工具，目前最新为webpack3，可以将 .js, .css , image等静态资源当做一个模块来进行打包，那么每一种模块都是有一个对应的 loader来实现......
+                        </div>
+                    </a>
+                    <p class="post-meta">
+                        Posted by Linx on July 12, 2017
+                    </p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="./game_zombie.html" target="_blank">
+                        <h2 class="post-title">
+                            JQ笔记总结
+                        </h2>
+
+                        <h3 class="post-subtitle">
+                            简单的jq笔记，方便日后的查找和复习
+                        </h3>
+
+                        <div class="post-content-preview">
+                            <!-- webpack是一个资源的打包工具，目前最新为webpack3，可以将 .js, .css , image等静态资源当做一个模块来进行打包，那么每一种模块都是有一个对应的 loader来实现...... -->
+                        </div>
+                    </a>
+                    <p class="post-meta">
+                        Posted by Linx on July 12, 2017
+                    </p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="./game_zombie.html" target="_blank">
+                        <h2 class="post-title">
+                            3D扫雷游戏
+                        </h2>
+
+                        <h3 class="post-subtitle">
+                            CSS3+js+ps制作3D扫雷小游戏
+                        </h3>
+
+                        <div class="post-content-preview">
+                            <!-- webpack是一个资源的打包工具，目前最新为webpack3，可以将 .js, .css , image等静态资源当做一个模块来进行打包，那么每一种模块都是有一个对应的 loader来实现...... -->
+                            一直觉得做游戏可以很好的巩固之前所学的知识，虽然耗时点。但是做完之后还是有满满的成就感，特别是对于一个刚出门不久的人。
+                        </div>
+                    </a>
+                    <p class="post-meta">
+                        Posted by Linx on July 12, 2017
+                    </p>
+                </div>
+                <hr>
+
+
+
+                <!-- Pager -->
+
+                <!-- <ul class="pager">
+
+
+                    <li class="next">
+                        <a href="/page2">Older Posts &rarr;</a>
+                    </li>
+
+                </ul> -->
+
+
+            </div>
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        <a href="./tags.html" title="前端开发" rel="7">前端开发</a>
+
+                        <a href="./tags.html" title="插件整理" rel="1">插件整理</a>
+
+                        <a href="./tags.html" title="小游戏" rel="2">小游戏</a>
+
+                        <a href="./tags.html" title="交互设计" rel="4">交互设计</a>
+
+
+
+
+
+
+
+
+                    </div>
+                </section>
+
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr>
+                    <h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+
+                        <img src=".img/avatar-hux.jpg" />
+
+
+                        <p>写写代码，做做设计</p>
+
+                        <!-- SNS Link -->
+                        <!-- <ul class="list-inline">
+
+
+                            <li>
+                                <a href="https://twitter.com/huxpro">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+
+
+                            <li>
+                                <a target="_blank" href="https://www.zhihu.com/people/huxpro">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                    </span>
+                                </a>
+                            </li>
+
+
+                            <li>
+                                <a target="_blank" href="https://weibo.com/huxpro">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+
+
+
+                            <li>
+                                <a target="_blank" href="https://github.com/huxpro">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+
+
+                        </ul> -->
+                    </div>
+                </section>
+                <!-- Friends Blog -->
+
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+
+                    <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+
+                    <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+
+                    <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+
+                    <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="./js/jquery.min.js "></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+    <script src="./js/bootstrap.min.js "></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="./js/hux-blog.min.js "></script>
+
+    <!-- Service Worker -->
+
+    <script src="./js/snackbar.js "></script>
+    <script src="./js/sw-registration.js "></script>
+
+
+    <!-- async load function -->
+    <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script>
+
+    <!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+    <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+    <!-- jquery.tagcloud.js -->
+    <script>
+        // only load tagcloud.js in tag.html
+        if ($('#tag_cloud').length !== 0) {
+            async('/js/jquery.tagcloud.js', function() {
+                $.fn.tagcloud.defaults = {
+                    //size: {start: 1, end: 1, unit: 'em'},
+                    color: {
+                        start: '#bbbbee',
+                        end: '#0085a1'
+                    },
+                };
+                $('#tag_cloud a').tagcloud();
+            })
+        }
+    </script>
+
+    <!--fastClick.js -->
+    <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function() {
+            var $nav = document.querySelector("nav");
+            if ($nav) FastClick.attach($nav);
+        })
+    </script>
+
+
+    <!-- Google Analytics -->
+
+    <!-- <script>
+        var _gaId = 'UA-49627206-1';
+        var _gaDomain = 'huangxuan.me';
+
+        // Originial
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', './analytics.js', 'ga');
+
+        ga('create', _gaId, _gaDomain);
+        ga('send', 'pageview');
+    </script> -->
+
+
+
+    <!-- Baidu Tongji -->
+
+
+
+    <!-- Side Catalog -->
+
+
+
+    <!-- Multi-Lingual -->
+
+
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="/img/icon_wechat.png" width="0" height="0" /> -->
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

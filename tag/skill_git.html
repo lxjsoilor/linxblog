@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+
+    <title>Linx Blog</title>
+
+    <!-- Web App Manifest -->
+    <style>
+        .container p {
+            text-indent: 2em;
+        }
+    </style>
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="/img/favicon.ico"> -->
+
+    <!-- Canonical URL -->
+    <!-- <link rel="canonical" href="https://huangxuan.me/2015/04/14/unix-linux-note/"> -->
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="../css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+
+<body ontouchstart="">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="/">Linx Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="huxblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="../index.html">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="../about.html">About</a>
+                        </li>
+                        <!-- 
+                        <li>
+                            <a href="/portfolio/">Portfolio</a>
+                        </li> -->
+
+                        <li>
+                            <a href="../tags.html">Tags</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#huxblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __HuxNav__ = {
+            close: function() {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function() {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function() {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function(e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __HuxNav__.close()
+            } else {
+                __HuxNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close HuxNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function(e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __HuxNav__.close();
+        })
+    </script>
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+    <!-- <img src="/img/post-bg-unix-linux.jpg" width="0" height="0"> -->
+
+    <!-- Post Header -->
+    <style type="text/css">
+        header.intro-header {
+            position: relative;
+            background-image: url('../img/post-bg-unix-linux2.jpg')
+        }
+    </style>
+    <header class="intro-header">
+        <div class="header-mask"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <div class="tags">
+
+                            <a class="tag" href="javascript:;" title="OS">git版本控制</a>
+
+                            <a class="tag" href="javascript:;" title="Unix">分布式</a>
+
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
+
+                        </div>
+                        <h1>收集的git相关操作</h1>
+
+
+                        <!-- <h2 class="subheading">canvas+js+ps模块化制作双人射击小游戏</h2> -->
+
+                        <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                    <h1>收集的git相关操作</h1>
+                    <h3>init</h3>
+                    <ul>
+                        <li>作用：让git管理此项目，一个项目调用一次</li>
+                        <li>语法：git init</li>
+                    </ul>
+                    <h3>config</h3>
+                    <ul>
+                        <li>作用：配置用户名与邮箱，在提交版本时就会有对应的记录</li>
+                        <li>语法：git config --blobal user.name xxx</li>
+                        <li>语法：git config --blobal user.email xxx</li>
+                        <li>语法：git config --blobal alias.{别名} {命令} ==> 给指定命令起别名</li>
+                        <li>语法：git config --list ==> 查看所有配置</li>
+                    </ul>
+                    <h3>add</h3>
+                    <ul>
+                        <li>提交工作区文件到暂存区</li>
+                        <li>it add {文件名1 文件名2} ==> 提交指定工作区文件</li>
+                        <li>git add -A ==> 提交全部工作区文件</li>
+                    </ul>
+                    <h3>rm</h3>
+                    <ul>
+                        <li>作用：删除文件</li>
+                        <li>语法: git rm --cached {fileName} ==> 取消文件暂存</li>
+                        <li>语法: git rm {fileName} ==> 取消文件暂存并删除工作区文件</li>
+                        <li>语法：git rm -f {fileName} ==> 取消文件暂存并删除工作区文件，强制操作</li>
+                    </ul>
+                    <h3>commit</h3>
+                    <ul>
+                        <li>作用：提交新版本</li>
+                        <li>作用：提交新版本</li>
+                        <li>语法：git commit -m {描述} --amend ==> 不产生新版本，合并到上一次提交的版本</li>
+                    </ul>
+                    <h3>diff</h3>
+                    <ul>
+                        <li>作用：不同区之间的代码差异对比</li>
+                        <li>语法：git diff [fileName] ==> 工作区与暂存区之间的对比</li>
+                        <li>语法：git diff --cached(--staged) [fileName] ==> 暂存区与版本区之间的对比</li>
+                        <li>语法：git diff master [fileName] ==> 工作区与版本区之间的对比</li>
+                        <li>语法：git diff [分支名] [分支名] [fileName]</li>
+                    </ul>
+                    <h3>reset</h3>
+                    <ul>
+                        <li>作用：恢复工作区文件</li>
+                        <li>语法：git reset HEAD {fileName} ==> 从暂存区撤回某文件到工作区</li>
+                        <li>语法：git reset --hard HEAD^ ==> 恢复到上一次提交的版本</li>
+                        <li>语法：git reset --hard HEAD~{number} ==> 恢复到之前第几次提交的版本</li>
+                        <li>语法：git reset --hard {commitId} ==> 恢复工作区文件到指定版本</li>
+                    </ul>
+                    <h3>checkout</h3>
+                    <ul>
+                        <li>作用：恢复文件的修改</li>
+                        <li>语法：git checkout {file.name} ==> 检出当前分支文件</li>
+                        <li>语法：git checkout {分支名} 检出指定分支文件</li>
+                        <li>语法：git checkout {commitId} {file.name} 从指定版本区恢复某个文件</li>
+                        <li>语法：git checkout -b {分支名} 在当前基础上创建分支并切换到该分支</li>
+                    </ul>
+                    <h3>branch</h3>
+                    <ul>
+                        <li>作用：分支操作</li>
+                        <li>语法：git branch ==> 查看所有分支</li>
+                        <li>语法：git branch {分支名} ==> 创建分支</li>
+                        <li>语法：git branch -d {分支名} ==> 删除指定分支</li>
+                        <li>语法：git branch -D {分支名} ==> 强制删除未被合并的分支</li>
+                        <li>语法：git branch -D {分支名} ==> 强制删除未被合并的分支</li>
+                        <li>语法：git branch -D {分支名} ==> 强制删除未被合并的分支</li>
+                    </ul>
+                    <h3>log</h3>
+                    <ul>
+                        <li>语法：git branch -D {分支名} ==> 强制删除未被合并的分支</li>
+                        <li>语法：git branch -D {分支名} ==> 强制删除未被合并的分支</li>
+                        <li>语法：git log {要查看的数量}</li>
+                    </ul>
+                    <h3>reflog</h3>
+                    <ul>
+                        <li>作用：查看操作历史</li>
+                        <li>语法：git reflog</li>
+                    </ul>
+                    <h3>remote</h3>
+                    <ul>
+                        <li>作用：查看远程仓库信息</li>
+                        <li>语法：git remote 查看远程仓库名字</li>
+                        <li>语法：git remote -v 查看远程仓库的地址</li>
+                    </ul>
+                    <h3>push</h3>
+                    <ul>
+                        <li>作用：提交本地版本区到远程仓库，远程没有该分支则会创建</li>
+                        <li>语法：git push {远程仓库名} {分支名}</li>
+                    </ul>
+                    <h3>pull</h3>
+                    <ul>
+                        <li>作用：拉取远程仓库代码合并到当前工作区</li>
+                        <li>语法：git pull</li>
+                    </ul>
+                    <h3>fetch</h3>
+                    <ul>
+                        <li>作用：拉取远程仓库git信息到本地</li>
+                        <li>语法：git fetch</li>
+                    </ul>
+                    <h3>merge</h3>
+                    <ul>
+                        <li>作用：合并某分支到当前分支</li>
+                        <li>语法：git merge {仓库名/分支名}</li>
+                        <li>语法：git merge {版本ID}</li>
+                    </ul>
+                    <h3>stash</h3>
+                    <ul>
+                        <li>作用：暂存区文件缓存操作</li>
+                        <li>语法：git stash ==> 临时存储暂存区文件</li>
+                        <li>语法：git statsh apply ==> 取出临时存储的暂存区文件</li>
+                        <li>语法：git statsh drop ==> 删除暂存区缓存</li>
+                        <li>语法：git statsh pop ==> 取出临时存储的暂存区文件，并删除缓存</li>
+                    </ul>
+                    <h3>tag</h3>
+                    <ul>
+                        <li>作用：标签操作</li>
+                        <li>语法：git tag ===> 查看所有标签</li>
+                        <li>语法：git tag {标签名} ==> 创建标签</li>
+                    </ul>
+                    <h3>配置SSH连接github</h3>
+                    <ul>
+                        <li>在本地生成秘钥：ssh-keygen -t rsa</li>
+                        <li>找到秘钥生成的目录，将公钥放到Github中
+                            <ul>
+                                <li>github点击右上角人物头像</li>
+                                <li>选择settings菜单</li>
+                                <li>选择SSH相关菜单</li>
+                                <li>选择添加一个SSH</li>
+                                <li>输入ssh的名称，已知内容（就是公钥）将公钥放入其中，保存即可</li>
+                            </ul>
+                        </li>
+                        <li>在本地测试 ssh git@github.com看看是否成功</li>
+                        <li>提交代码
+                            <b>备注：如果在提交代码的时候github中已经含有内容，最好先更新代码，使用SSH地址进行提交：</b>
+                            <kbd>git pull --rebase origin master</kbd>
+                        </li>
+
+                    </ul>
+
+                    <!--  -->
+                    <hr style="visibility: hidden;">
+
+
+                    <ul class="pager">
+
+                        <li class="previous">
+                            <a href="/2015/03/31/e2e_user_scenarios/" data-toggle="tooltip" data-placement="top" title="Definition of End to End User Scenarios">
+                        Previous<br>
+                        <span>Definition of End to End User Scenarios</span>
+                        </a>
+                        </li>
+
+
+                        <li class="next">
+                            <a href="/2015/04/15/os-metro/" data-toggle="tooltip" data-placement="top" title="hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇">
+                        Next<br>
+                        <span>hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇</span>
+                        </a>
+                        </li>
+
+                    </ul>
+
+
+
+                    <!-- disqus 评论框 start -->
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                    <!-- disqus 评论框 end -->
+
+
+
+                </div>
+
+                <!-- Side Catalog Container -->
+
+                <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                    <div class="side-catalog">
+                        <hr class="hidden-sm hidden-xs">
+                        <h5>
+                            <a class="catalog-toggle" href="#">CATALOG</a>
+                        </h5>
+                        <ul class="catalog-body"></ul>
+                    </div>
+                </div>
+
+
+                <!-- Sidebar Container -->
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+
+                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+
+                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+
+                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+
+
+
+    <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+    <!--   <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = "hux";
+        var disqus_identifier = "/2015/04/14/unix-linux-note";
+        var disqus_url = "https://huangxuan.me/2015/04/14/unix-linux-note/";
+
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> -->
+    <!-- disqus 公共JS代码 end -->
+
+
+
+
+    <!-- async load function -->
+    <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script>
+    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+    <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
+            anchors.options = {
+                visible: 'always',
+                placement: 'right',
+                icon: '#'
+            };
+            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+        })
+    </script>
+    <style>
+        /* place left on bigger screen */
+        
+        @media all and (min-width: 800px) {
+            .anchorjs-link {
+                position: absolute;
+                left: -0.75em;
+                font-size: 1.1em;
+                margin-top: -0.1em;
+            }
+        }
+    </style>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.min.js "></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+    <script src="../js/bootstrap.min.js "></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/hux-blog.min.js "></script>
+
+    <!-- Service Worker -->
+
+    <script src="../js/snackbar.js "></script>
+    <script src="../js/sw-registration.js "></script>
+
+</body>
+
+</html>

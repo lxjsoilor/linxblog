@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+
+    <title>Linx Blog</title>
+
+    <!-- Web App Manifest -->
+    <style>
+        .container p {
+            text-indent: 2em;
+        }
+    </style>
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="/img/favicon.ico"> -->
+
+    <!-- Canonical URL -->
+    <!-- <link rel="canonical" href="https://huangxuan.me/2015/04/14/unix-linux-note/"> -->
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="../css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+
+<body ontouchstart="">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="/">Linx Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="huxblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="../index.html">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="../about.html">About</a>
+                        </li>
+                        <!-- 
+                        <li>
+                            <a href="/portfolio/">Portfolio</a>
+                        </li> -->
+
+                        <li>
+                            <a href="../tags.html">Tags</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#huxblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __HuxNav__ = {
+            close: function() {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function() {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function() {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function(e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __HuxNav__.close()
+            } else {
+                __HuxNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close HuxNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function(e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __HuxNav__.close();
+        })
+    </script>
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+    <!-- <img src="/img/post-bg-unix-linux.jpg" width="0" height="0"> -->
+
+    <!-- Post Header -->
+    <style type="text/css">
+        header.intro-header {
+            position: relative;
+            background-image: url('../img/post-bg-unix-linux2.jpg')
+        }
+    </style>
+    <header class="intro-header">
+        <div class="header-mask"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <div class="tags">
+
+                            <!-- <a class="tag" href="javascript:;" title="OS">Canvas</a>
+
+                            <a class="tag" href="javascript:;" title="Unix">Js</a>
+
+                            <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
+
+                        </div>
+                        <h1>JQ笔记总结</h1>
+
+
+                        <!-- <h2 class="subheading">canvas+js+ps模块化制作双人射击小游戏</h2> -->
+
+                        <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                    <h1>jq笔记总结</h1>
+                    快速跳转
+                    <div class="tags">
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq1">认识JQ</a>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq2">JQ选择器</a>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq3">JQ中对属性、样式、HTML内容、文本内容、值的操作</a>
+                        <br>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq4">JQ中的事件</a>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq5">JQ中的筛选方法</a>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq6">JQ中 DOM操作</a>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq7">JQ中的动画</a>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq8">位置、尺寸</a>
+                        <a class="tag" style="color:black;border: 1px solid #000;" href="#jq9">JQ对象访问</a>
+                    </div>
+                    <h3 id="jq1"><a href="javascript:;">#</a> 认识JQ</h3>
+                    <dt>1、什么是JQ：JQ是JavaScript的一个库。</dt>
+                    <dt>2、分两种类型：开发版（未压缩）和生产版（压缩）</dt>
+                    <dl>
+                        <dt>3、文档就绪函数</dt>
+
+                        <dd>1、原生 window.onload
+                            <ul>
+                                <li>1、所有内容加载完毕后执行-->dom结构,以及dom结构里面的所有内容都加载完</li>
+                                <li>2、不能同时编写多个，只执行后者</li>
+                            </ul>
+                        </dd>
+                        <dd>2、JQ--- $(document).ready()
+                            <ul>
+                                <li>1、DOM结构加载完后执行-->DOM结构加载完,但是dom里面的内容,例如图片等,可能还没加载完</li>
+                                <li>2、可以执行多个</li>
+                                <li>3、简写 $(function(){....})</li>
+                            </ul>
+                        </dd>
+                        <dd>3、JQ中的window.onload-->dom结构,以及dom结构里面的所有内容都加载完
+                            <ul>
+                                <li>1、$(winow).load(function(){.....})</li>
+                                <li>2、$('div').load(function(){.....})</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>4、DOM对象和JQ对象</dt>
+                        <dd>1、DOM对象
+                            <ul>
+                                <li>1、DOM对象：var domDiv=document.getElementById('box')，domDiv即DOM对象。</li>
+                                <li>2、DOM对象只能使用原生JS方法</li>
+                                <li>3、DOM转JQ对象：用$(DOM对象) 包裹起来，就获得了JQ对象，就可以使用JQ方法。</li>
+                            </ul>
+                        </dd>
+                        <dd>2、JQ对象
+                            <ul>
+                                <li>1、JQ对象：var $domDiv=$(domDiv), 用JQ包装DOM对象后产生的即JQ对象，即$domDiv</li>
+                                <li>2、JQ对象一般使用JQ方法</li>
+                                <li>3、JQ对象转DOM对象
+                                    <ul>
+                                        <li>1、[0], $domDiv[0]</li>
+                                        <li>2、get(0),$domDiv.get(0)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+
+                    <h3 id="jq2"><a href="javascript:;">#</a> JQ选择器</h3>
+
+                    <dl>
+                        <dt>选择器一阶段</dt>
+                        <dd>基本选择器
+                            <ul>
+                                <li># ID选择器---单个元素-->$("#+id名")</li>
+                                <li>. class选择器---集合元素-->$(".+类名")</li>
+                                <li>标签选择器---集合元素-->$("标签名")</li>
+                                <li>* 通配符选择器---集合元素</li>
+                                <li>, 群组选择器---集合元素</li>
+                            </ul>
+                        </dd>
+                        <dd>层次选择器
+                            <ul>
+                                <li>(空格)后代选择器---集合元素-->$(".father .son")</li>
+                                <li>> 子元素选择器---集合元素-->$(".father > div")</li>
+                                <li>+ 某元素后的相邻兄弟---集合元素-->$(".li2 + li")-->选中的是类名为li2后面的那个li元素</li>
+                                <li>~ 某元素后所有的兄弟元素---集合元素</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>选择器二阶段</dt>
+                        <dd>过滤选择器
+                            <ul>
+                                <li>基本过滤选择器
+                                    <ul>
+                                        <li>:first 选第一个元素---单个元素</li>
+                                        <li>:last 选最后一个元素---单个元素</li>
+                                        <li>:not(xx) 选某元素且不匹配xx ---集合元素----------参数接受任何类型的选择器</li>
+                                        <li>:even 选索引为偶数的(从0开始)---集合元素</li>
+                                        <li>:eq(x) 选索引为X的元素(从0开始)---单个元素</li>
+                                    </ul>
+                                </li>
+                                <li>内容过滤选择器
+                                    <ul>
+                                        <li>:contains(x)选取含有文本x的元素$('div:contains("我")')---集合元素----参数是文本</li>
+                                        <li>:empty选取不包含子元素或文本的空元素$('div:empty')---集合元素</li>
+                                        <li>:has(x)选取含有选择器所匹配的元素的元素$('div:has(p)')---集合元素------参数接受任何类型的选择器</li>
+                                        <li>:parent选取含有子元素或者文本的元素$('div:parent')---集合元素</li>
+                                    </ul>
+                                </li>
+                                <li>可见性过滤选择器
+                                    <ul>
+                                        <li>:hidden选取所有不可见的元素$('div:hidden')---集合元素</li>
+                                        <li>:visible选取所有可见的元素$('div:visible')---集合元素</li>
+                                    </ul>
+                                </li>
+                                <li>属性过滤选择器
+                                    <ul>
+                                        <li>[attr]选取拥有此属性的元素$('div[id]')---集合元素</li>
+                                        <li>[attr=val]选取属性值为val的元素$('div[id=aaa]')---集合元素</li>
+                                        <li>[attr!=val]选取属性值不等于val的元素$('div[id!=ccc]')---集合元素</li>
+                                        <li>[attr^=val]选取属性的值以val开头的元素---集合元素</li>
+                                        <li>[attr$=val]选取属性的值以val结束的元素---集合元素</li>
+                                        <li>[attr*=val]选取属性的值含有val的元素---集合元素</li>
+                                        <li>[attr][attr]复合属性选择器---集合元素</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+
+                    <h3 id="jq3"><a href="javascript:;">#</a> JQ中对 属性 、样式、HTML内容、文本内容、值的操作</h3>
+                    <dl>
+                        <dt>JQ对属性的操作</dt>
+                        <dd>1、获取某属性 attr('某') ----$('div').attr('title')
+                            <ul>
+                                <li>（高版本）对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。</li>
+                                <li>对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。</li>
+                            </ul>
+                        </dd>
+                        <dd>2、设置属性 attr('属性名','属性值')-----$('div').attr('title','div的标题')</dd>
+                        <dd>3、删除属性 removeAttr('属性名') ----$('div').removeAttr('title')</dd>
+                        <dt>JQ方法对样式的操作
+                            <dd>
+                                <ul>
+                                    <li>1、获取某样式 $('div').css('color')</li>
+                                    <li>2、设置某一个样式 $('div').css('color','#000')</li>
+                                    <li>3、设置一组样式 $('div').css({'color':'#000','background':'blue'})</li>
+                                    <li>4、获取class属性所有值 ---$('div').attr('class');</li>
+                                    <li>5、设置class属性所有值---$('div').attr('class','active'); 替换方法，会删掉其他class</li>
+                                    <li>6、样式追加addClass() ,且不会重复添加。---$('div').addClass('hover')</li>
+                                    <li>7、移除所有样式removeClass(), 移除指定样式removeClass('hover')</li>
+                                    <li>8、切换样式toggleClass()---$('div').toggleClass('active'); 没有则添加，有则删除。</li>
+                                    <li>9、判断是否含有某样式，hasClass(),有返回true,没有返回false。$('div').hasClass('active');</li>
+                                </ul>
+                            </dd>
+                        </dt>
+                        <dt>HTML\文本内容\值</dt>
+                        <dd>
+                            <ul>
+                                <li>1、html()----获取某元素的HTML内容，包括标签，包括文本内容。$('div').html();</li>
+                                <li>2、html('...')----设置某元素的HTML，$('div').html('&lt;span&gt;内容&lt;span&gt;')</li>
+                                <li>3、text()----获取某元素的内容，$('div').text();</li>
+                                <li>4、text('...')---设置某元素的内容....,$('div').text('我是内容');</li>
+                                <li>5、val()---获取表单元素的值，$('input').val();</li>
+                                <li>6、val('...')---设置表单元素的值,$('input').val('请输入用户名');</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <h3 id="jq4"><a href="javascript:;">#</a> JQ中的事件</h3>
+                    <dl>
+                        <dt>事件绑定，bind(type,[data],fn)(老方法了)</dt>
+                        <dd>
+                            <ul>
+                                <li>绑定一个事件</li>
+                                <li>绑定多个事件一个处理程序</li>
+                                <li>绑定多个事件多个处理程序</li>
+                            </ul>
+                        </dd>
+                        <dt>简写绑定事件即普通写法</dt>
+                        <dt>移除事件</dt>
+                        <dd>
+                            <ul>
+                                <li>1、unbind() 没有参数 解绑该元素的所有绑定事件</li>
+                                <li>2、unbind(type) 解绑指定类型 事件</li>
+                            </ul>
+                        </dd>
+                        <dt>常用事件</dt>
+                        <dd>
+                            <ul>
+                                <li>focus
+                                    <ul>
+                                        <li>focus()方法 使input元素获得焦点</li>
+                                        <li>focus(fn) 获得焦点事件</li>
+                                    </ul>
+                                </li>
+                                <li>blur
+                                    <ul>
+                                        <li>blur() 方法，使元素失去焦点</li>
+                                        <li>blur(fn) 失去焦点事件</li>
+                                    </ul>
+                                </li>
+                                <li>change 元素值发生改变时触发
+                                    <ul>
+                                        <li>适用于文本域，下拉框等</li>
+                                    </ul>
+                                </li>
+                                <li>mouseover、mouseout
+                                    <ul>
+                                        <li>当鼠标指针位于元素上方时，会发生 mouseover 事件</li>
+                                        <li>mouseover 事件在鼠标指针进入被选元素或任意子元素时都会被触发</li>
+                                    </ul>
+                                </li>
+                                <li>mouseenter、mouseleave
+                                    <ul>
+                                        <li>当鼠标指针穿过（进入）被选元素时，会发生 mouseenter 事件。</li>
+                                        <li>mouseenter 事件只有在鼠标指针进入被选元素时被触发</li>
+                                    </ul>
+                                </li>
+                                <li>mousedown、mouseup
+                                    <ul>
+                                        <li>mousedown鼠标指针移动到元素上方，并按下鼠标按键时</li>
+                                        <li>mouseup当在元素上放松鼠标按钮时</li>
+                                    </ul>
+                                </li>
+                                <li>mousemove
+                                    <ul>
+                                        <li>当鼠标指针在指定的元素中移动时，就会发生 mousemove 事件</li>
+                                    </ul>
+                                </li>
+                                <li>resize
+                                    <ul>
+                                        <li>当调整浏览器窗口大小时，发生 resize 事件。</li>
+                                    </ul>
+                                </li>
+                                <li>scroll
+                                    <ul>
+                                        <li>当用户滚动指定的元素时，会发生 scroll 事件。</li>
+                                    </ul>
+                                </li>
+                                <li>select
+                                    <ul>
+                                        <li>当 textarea 或文本类型的 input 元素中的文本被选择（标记）时，会发生 select 事件。</li>
+                                    </ul>
+                                </li>
+                                <li>keydown
+                                    <ul>
+                                        <li>当键盘键被按下时发生 keydown 事件。</li>
+                                    </ul>
+                                </li>
+                                <li>keyup
+                                    <ul>
+                                        <li>当键盘键被松开时发生 keyup 事件。</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </dd>
+                        <dt>合成事件
+                            <dd>
+                                <ul>
+                                    <li>hover
+                                        <ul>
+                                            <li>hover(fn1,fn2) 鼠标一上去时触发函数fn1,移出来时触发函数fn2</li>
+                                        </ul>
+                                    </li>
+                                    <li>toggle
+                                        <ul>
+                                            <li>1、toggle(fn1,fn2,fn3) 已淘汰</li>
+                                            <li>2、toggle() 切换显示和隐藏</li>
+                                            <li>3、toggle([speed]) 在某速度下切换显示和隐藏的</li>
+                                            <li>4、toggle([speed],fn) 切换显示和隐藏后调用fn函数</li>
+                                            <li>5、toggle(true/false) 根据参数判断是显示还是隐藏</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dt>
+                        <dt>事件对象
+                            <dd>
+                                <ul>
+                                    <li>1、什么是事件对象
+                                        <ul>
+                                            <li>事件对象--是用来记录事件发生时的相关相信的对象</li>
+                                            <li>事件发生时产生，事件结束时销毁</li>
+                                        </ul>
+                                    </li>
+                                    <li>2、JQ中的事件对象 function(event)
+                                    </li>
+                                    <li>3、事件对象常用属性
+                                        <ul>
+                                            <li>1、event.type---获取事件的类型</li>
+                                            <li>2、event.data---获取传递给事件的数据</li>
+                                            <li>3、event.target---获取到触发事件的元素</li>
+                                            <li>4、event.preventDefault() 阻止事件的默认行为</li>
+                                            <li>5、event.stopPropagation()阻止事件冒泡行为</li>
+                                            <li>6、enent.pageX和event.pageY 获取到光标相对于页面的X坐标或Y坐标</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dt>
+                        <dt>事件冒泡
+                            <dd>
+                                <ul>
+                                    <li>1、阻止事件冒泡 event.stopPropagation()</li>
+                                    <li>2、阻止默认行为 event.preventDefault</li>
+                                </ul>
+                            </dd>
+                        </dt>
+                        <dt>主动触发</dt>
+                        <dd>
+                            <ul>
+                                <li>1、tigger('click') 主动触发某某事件</li>
+                                <li>2、JQ默认事件可以简化写法 $('.box').click();</li>
+                                <li>3、触发自定义事件 $('.box').tigger('myFunc')</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <h3 id="jq5"><a href="javascript:;">#</a> JQ中的筛选方法</h3>
+                    <dl>
+                        <dt>1、过滤方法</dt>
+                        <dd>
+                            <ul>
+                                <li>eq(0) 获取当前链式操作中第N个</li>
+                                <li>first()匹配的第一个元素</li>
+                                <li>last()获取匹配的最后个元素</li>
+                                <li>hasClass()检查当前的元素是否含有某个特定的类，如果有，则返回true。</li>
+                                <li>filter()筛选出与指定表达式匹配的元素集合。</li>
+                                <li>is() 方法用于查看选择的元素是否匹配选择器。</li>
+                                <li>has()保留包含特定后代的元素，去掉那些不含有指定后代的元素。</li>
+                            </ul>
+                        </dd>
+                        <dt>2、祖先查找</dt>
+                        <dd>
+                            <ul>
+                                <li>1、parent() 方法返回被选元素的直接父元素。</li>
+                                <li>2、parents() 方法返回被选元素的所有祖先元素。</li>
+                            </ul>
+                        </dd>
+                        <dt>3、后代查找</dt>
+                        <dd>
+                            <ul>
+                                <li>1、children() 方法返回被选元素的所有直接子元素。</li>
+                                <li>2、find() 方法返回被选元素的后代元素。</li>
+                            </ul>
+                        </dd>
+                        <dt>4、同胞查找
+                            <ul>
+                                <li>1、next() 方法返回被选元素的后一个同级元素。</li>
+                                <li>2 、nextAll() 方法返回被选元素之后的所有同级元素。</li>
+                                <li>3、prev() 方法返回被选元素的前一个同级元素。</li>
+                                <li>4、prevAll() 方法返回被选元素之前的所有同级元素。</li>
+                                <li>5、siblings() 方法返回被选元素的所有同级元素。</li>
+                            </ul>
+                        </dt>
+                    </dl>
+                    <h3 id="jq6"><a href="javascript:;">#</a> JQ中 DOM操作</h3>
+                    <dl>
+                        <dt>内部插入</dt>
+                        <dd>内部的后面
+                            <ul>
+                                <li>append() --------在......的里面的后面放........</li>
+                                <li>appendTo()------把.......放到.......的里面的后面</li>
+                            </ul>
+                        </dd>
+                        <dd>内部的前面
+                            <ul>
+                                <li>prepend()</li>
+                                <li>prependTo()</li>
+                            </ul>
+                        </dd>
+                        <dt>外部插入</dt>
+                        <dd>外部的前面
+                            <ul>
+                                <li>after() --------在.......的后面插入......</li>
+                                <li>insertAfter()------把.......放.......后面</li>
+                            </ul>
+                        </dd>
+                        <dd>外部的后面
+                            <ul>
+                                <li>before()-------在.....的前面插入.......</li>
+                                <li>inserBefore()</li>
+                            </ul>
+                        </dd>
+                        <dt>替换</dt>
+                        <dd>
+                            <ul>
+                                <li>replaceWith()------讲匹配元素替换成.........(指定的HTML或DOM元素)</li>
+                            </ul>
+                        </dd>
+                        <dt>删除</dt>
+                        <dd>
+                            <ul>
+                                <li>empty() 清空匹配的元素，即删除子元素</li>
+                                <li>remove() 删除被选元素，及其子元素</li>
+                                <li>detach() 删除被选元素，但是保留它的行为</li>
+                            </ul>
+                        </dd>
+                        <dt>复制</dt>
+                        <dd>
+                            <ul>
+                                <li>clone() 克隆匹配到的元素</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <h3 id="jq7"><a href="javascript:;">#</a> JQ中的动画</h3>
+                    <dl>
+                        <dt>基本效果</dt>
+                        <dd>
+                            <ul>
+                                <li>show()方法
+                                    <ul>
+                                        <li>显示隐藏的被选元素</li>
+                                        <li>适用于通过 jQuery 方法和 CSS 中 display:none 隐藏的元素</li>
+                                        <li>不适用于通过 visibility:hidden 隐藏的元素</li>
+                                    </ul>
+                                </li>
+                                <li>hide()
+                                    <ul>
+                                        <li>隐藏被选元素。</li>
+                                    </ul>
+                                </li>
+                                <li>toggle() 方法切换显示/隐藏
+                                </li>
+                            </ul>
+                        </dd>
+                        <dt>滑动</dt>
+                        <dd>
+                            <ul>
+                                <li>slideDown() 方法以滑动方式显示被选元素</li>
+                                <li>slideUp() 方法以滑动方式隐藏被选元素。</li>
+                                <li>slideToggle() 方法在被选元素上进行 slideUp() 和 slideDown() 之间的切换。</li>
+                            </ul>
+                        </dd>
+                        <dt>谈入谈出</dt>
+                        <dd>
+                            <ul>
+                                <li>fadeIn() 方法逐渐改变被选元素的不透明度，从隐藏到可见（褪色效果）。</li>
+                                <li>fadeOut() 方法逐渐改变被选元素的不透明度，从可见到隐藏（褪色效果）。</li>
+                                <li>fadeTo() 方法逐渐改变被选元素的不透明度为指定的值（褪色效果）。</li>
+                                <li>fadeToggle() 方法在 fadeIn() 和 fadeOut() 方法之间切换。</li>
+                            </ul>
+                        </dd>
+                        <dt>自定义动画</dt>
+                        <dd>
+                            <ul>
+                                <li>animate() 方法执行 CSS 属性集的自定义动画。</li>
+                                <li>stop() 方法为被选元素停止当前正在运行的动画。</li>
+                                <li>delay() 方法对队列中的下一项的执行设置延迟。</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <h3 id="jq8"><a href="javascript:;">#</a> 位置、尺寸</h3>
+                    <ul>
+                        <li>1、offset() 方法设置或返回被选元素相对于文档的偏移坐标。</li>
+                        <li>2、position() 方法返回第一个匹配元素的位置（相对于它的父元素）返回的对象包含两个整型属性：top 和 left。</li>
+                        <li>3、scrollTop() 方法设置或返回被选元素的垂直滚动条位置。</li>
+                        <li>4、width() 方法设置或返回被选元素的宽度。</li>
+                        <li>5、innerWidth() 方法返回第一个匹配元素的内部宽度。</li>
+                        <li>6、outerWidth() 方法返回第一个匹配元素的外部宽度。</li>
+                    </ul>
+                    <h3 id="jq9"><a href="javascript:;">#</a> JQ对象访问</h3>
+                    <ul>
+                        <li>1、each() 方法为每个匹配元素规定要运行的函数。</li>
+                        <li>2、size() 方法返回被 jQuery 选择器匹配的元素的数量。</li>
+                        <li>3、index() 方法返回指定元素相对于其他指定元素的 index 位置。</li>
+                    </ul>
+
+
+                    <!--  -->
+                    <hr style="visibility: hidden;">
+
+
+                    <ul class="pager">
+
+                        <li class="previous">
+                            <a href="/2015/03/31/e2e_user_scenarios/" data-toggle="tooltip" data-placement="top" title="Definition of End to End User Scenarios">
+                        Previous<br>
+                        <span>Definition of End to End User Scenarios</span>
+                        </a>
+                        </li>
+
+
+                        <li class="next">
+                            <a href="/2015/04/15/os-metro/" data-toggle="tooltip" data-placement="top" title="hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇">
+                        Next<br>
+                        <span>hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇</span>
+                        </a>
+                        </li>
+
+                    </ul>
+
+
+
+                    <!-- disqus 评论框 start -->
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                    <!-- disqus 评论框 end -->
+
+
+
+                </div>
+
+                <!-- Side Catalog Container -->
+
+                <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                    <div class="side-catalog">
+                        <hr class="hidden-sm hidden-xs">
+                        <h5>
+                            <a class="catalog-toggle" href="#">CATALOG</a>
+                        </h5>
+                        <ul class="catalog-body"></ul>
+                    </div>
+                </div>
+
+
+                <!-- Sidebar Container -->
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                    <!-- Featured Tags -->
+
+                    <!-- <section>
+                        <hr class="hidden-sm hidden-xs">
+                        <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                        <div class="tags">
+
+
+                            <a href="/tags/#知乎" title="知乎" rel="7">
+                                    知乎
+                                </a>
+
+
+
+
+
+                            <a href="/tags/#Android" title="Android" rel="2">
+                                    Android
+                                </a>
+
+
+
+                            <a href="/tags/#交互设计" title="交互设计" rel="4">
+                                    交互设计
+                                </a>
+
+
+
+                            <a href="/tags/#阿里巴巴" title="阿里巴巴" rel="3">
+                                    阿里巴巴
+                                </a>
+
+
+
+                            <a href="/tags/#前端开发" title="前端开发" rel="13">
+                                    前端开发
+                                </a>
+
+
+
+                            <a href="/tags/#职业病" title="职业病" rel="3">
+                                    职业病
+                                </a>
+
+
+
+                            <a href="/tags/#生活" title="生活" rel="2">
+                                    生活
+                                </a>
+
+
+
+
+
+
+
+
+
+                            <a href="/tags/#hUX 随想录" title="hUX 随想录" rel="2">
+                                    hUX 随想录
+                                </a>
+
+
+
+
+
+                            <a href="/tags/#UX Design" title="UX Design" rel="3">
+                                    UX Design
+                                </a>
+
+
+
+                            <a href="/tags/#OS" title="OS" rel="2">
+                                    OS
+                                </a>
+
+
+
+
+
+
+
+
+
+
+
+                            <a href="/tags/#JavaScript" title="JavaScript" rel="10">
+                                    JavaScript
+                                </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <a href="/tags/#译文" title="译文" rel="2">
+                                    译文
+                                </a>
+
+
+
+
+
+                            <a href="/tags/#PWA" title="PWA" rel="5">
+                                    PWA
+                                </a>
+
+
+
+
+                        </div>
+                    </section> -->
+
+
+                    <!-- Friends Blog -->
+
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+
+                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+
+                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+
+                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+    <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script>
+    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+    <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
+            anchors.options = {
+                visible: 'always',
+                placement: 'right',
+                icon: '#'
+            };
+            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+        })
+    </script>
+    <style>
+        /* place left on bigger screen */
+        
+        @media all and (min-width: 800px) {
+            .anchorjs-link {
+                position: absolute;
+                left: -0.75em;
+                font-size: 1.1em;
+                margin-top: -0.1em;
+            }
+        }
+    </style>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                    <!-- <p class="copyright text-muted">
+                        Copyright &copy; Hux Blog 2017
+                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
+                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
+                    </iframe> -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.min.js "></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+    <script src="../js/bootstrap.min.js "></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/hux-blog.min.js "></script>
+
+    <!-- Service Worker -->
+
+    <script src="../js/snackbar.js "></script>
+    <script src="../js/sw-registration.js "></script>
+
+
+    <!-- async load function -->
+    <!-- <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script> -->
+
+    <!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+    <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+    <!-- jquery.tagcloud.js -->
+    <!-- <script>
+        // only load tagcloud.js in tag.html
+        if ($('#tag_cloud').length !== 0) {
+            async('/js/jquery.tagcloud.js', function() {
+                $.fn.tagcloud.defaults = {
+                    //size: {start: 1, end: 1, unit: 'em'},
+                    color: {
+                        start: '#bbbbee',
+                        end: '#0085a1'
+                    },
+                };
+                $('#tag_cloud a').tagcloud();
+            })
+        }
+    </script> -->
+
+    <!--fastClick.js -->
+    <!-- <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function() {
+            var $nav = document.querySelector("nav");
+            if ($nav) FastClick.attach($nav);
+        })
+    </script> -->
+
+
+    <!-- Google Analytics -->
+    <!-- 
+    <script>
+        // dynamic User by Hux
+        var _gaId = 'UA-49627206-1';
+        var _gaDomain = 'huangxuan.me';
+
+        // Originial
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', _gaId, _gaDomain);
+        ga('send', 'pageview');
+    </script> -->
+
+
+
+    <!-- Baidu Tongji -->
+
+
+
+    <!-- Side Catalog -->
+    <!-- 
+    <script type="text/javascript">
+        function generateCatalog(selector) {
+
+            // interop with multilangual 
+            if () {
+                _containerSelector = 'div.post-container.active'
+            } else {
+                _containerSelector = 'div.post-container'
+            }
+
+            // init
+            var P = $(_containerSelector),
+                a, n, t, l, i, c;
+            a = P.find('h1,h2,h3,h4,h5,h6');
+
+            // clean
+            $(selector).html('')
+
+            // appending
+            a.each(function() {
+                n = $(this).prop('tagName').toLowerCase();
+                i = "#" + $(this).prop('id');
+                t = $(this).text();
+                c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                l = $('<li class="' + n + '_nav"></li>').append(c);
+                $(selector).append(l);
+            });
+            return true;
+        }
+
+        generateCatalog(".catalog-body");
+
+        // toggle side catalog
+        $(".catalog-toggle").click((function(e) {
+            e.preventDefault();
+            $('.side-catalog').toggleClass("fold")
+        }))
+
+        /*
+         * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+         * Fork by Hux to support padding
+         */
+        async("../js/jquery.nav.js", function() {
+            $('.catalog-body').onePageNav({
+                currentClass: "active",
+                changeHash: !1,
+                easing: "swing",
+                filter: "",
+                scrollSpeed: 700,
+                scrollOffset: 0,
+                scrollThreshold: .2,
+                begin: null,
+                end: null,
+                scrollChange: null,
+                padding: 80
+            });
+        });
+    </script> -->
+
+
+
+    <!-- Multi-Lingual -->
+
+
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="../img/icon_wechat.png" width="0" height="0" /> -->
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+
+    <title>Linx Blog</title>
+
+    <!-- Web App Manifest -->
+    <style>
+        .container p {
+            text-indent: 2em;
+        }
+    </style>
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="/img/favicon.ico"> -->
+
+    <!-- Canonical URL -->
+    <!-- <link rel="canonical" href="https://huangxuan.me/2015/04/14/unix-linux-note/"> -->
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="../css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+
+<body ontouchstart="">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="/">Linx Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="huxblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="../index.html">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="../about.html">About</a>
+                        </li>
+                        <!-- 
+                        <li>
+                            <a href="/portfolio/">Portfolio</a>
+                        </li> -->
+
+                        <li>
+                            <a href="../tags.html">Tags</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#huxblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __HuxNav__ = {
+            close: function() {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function() {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function() {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function(e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __HuxNav__.close()
+            } else {
+                __HuxNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close HuxNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function(e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __HuxNav__.close();
+        })
+    </script>
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+    <!-- <img src="/img/post-bg-unix-linux.jpg" width="0" height="0"> -->
+
+    <!-- Post Header -->
+    <style type="text/css">
+        header.intro-header {
+            position: relative;
+            background-image: url('../img/post-bg-unix-linux2.jpg')
+        }
+    </style>
+    <header class="intro-header">
+        <div class="header-mask"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <div class="tags">
+
+                            <!-- <a class="tag" href="javascript:;" title="OS">Canvas</a> -->
+
+                            <!-- <a class="tag" href="javascript:;" title="Unix">Js</a> -->
+
+                            <a class="tag" href="javascript:;" title="Linux">打包工具</a>
+
+                        </div>
+                        <h1>webpack使用文档</h1>
+                        <h2 class="subheading">webpack简单的使用记录</h2>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                    <h3>1.1. webpack介绍</h3>
+                    <p>webpack是一个资源的打包工具，目前最新为webpack3，可以将 .js, .css , image等静态资源当做一个模块来进行打包，那么每一种模块都是有一个对应的 loader来实现</p>
+                    <p>node环境的安装:</p>
+                    <pre>
+            webpack是基于nodejs运行的，所以在安装webpack之前必须先安装nodejs环境,
+            安装步骤如下
+                1、去 https://nodejs.org/en/ 中下载当前操作系统匹配的版本,windows下软件
+                名称通常叫做 node.exe
+                2、双击node.exe一路安装好，由于node.exe已经包含了npm工具，所以npm也能正常
+                使用了
+                3、由于直接使用npm install 安装第三方包是去国外网站上下载，有可能会被墙而
+                安装失败，所以我们要将下载源切换到国内淘宝上因此需要利用 npm install nrm
+                -g安装一个全局的nrm
+                4、安装好nrm以后，在cmd命令面板中输入： nrm use taobao 将下载源切换到淘宝
+                ，可以使用 nrm ls 查看当前使用的下载源
+                5、也可安装淘宝提供的类似于npm的工具 cnpm来替代npm安装node包,安装包命令
+                和npm一样，安装cnpm命令： npm install cnpm -g
+                    </pre>
+                    <p>webpack的安装:</p>
+                    <pre>
+                    安装webpack步骤：  
+                    
+                        第一种安装方式：npm使用国外镜像下载，速度慢
+                            在cmd命令行面板中 执行： npm install webpack@3.4.0 -g 将webpack
+                            安装为全局就能够在cmd命令行面板中使用webpack指令了   
+                    
+                        第二种安装方式：cnpm 使用淘宝作镜像下载，速度快
+                            在cmd命令行面板中 执行： cnpm install webpack@3.4.0 -g 将webpack
+                            安装为全局就能够在cmd命令行面板中使用webpack指令了
+                    </pre>
+
+                    <h3>1.1.1. webpack常用指令和webpack.config.js配置文件</h3>
+                    <li>webpack常用指令</li>
+                    <pre>
+                            webpack 入口文件.js 输出文件.js
+                            webpack         // 最基本的启动webpack的方法，默认查找名称为 webpack.config.js文件
+                            webpack --config webpack.config.js    // 指定配置文件
+                            webpack -p      // 对打包后的文件进行压缩
+                    </pre>
+                    <li>webpack.config.js配置文件的作用</li>
+                    <pre>
+                            如果只在cmd命令面板中输入 webpack指令，后面不跟任何参数的话，
+                            则默认查找的是 webpack.config.js文件，在这个文件中可以配置入口文件，
+                            输出文件以及相关loader和插件等,以增强webpack的功能
+                    </pre>
+                    <li>一个常用webpack版本的webpack.config.js文件结构：</li>
+                    <pre>
+    // 导入html-webpack-plugin 包，用来根据模板自动生成index.html
+    var htmlwp = require('html-webpack-plugin');
+    
+    module.exports={
+        entry:'../src/main.js', // 1.0 定义打包的入口文件路径
+        output:{
+            path:'../dist',   //打包以后的文件存放目录
+            filename:'build.js'  // 打包以后生成的文件名称
+        },
+        module:{
+            loaders:[ //webpack2及其以上也可以使用 rules:[]
+                {
+                    // 打包 .css文件
+                    test:/\.css$/,  
+                    loader:'style-loader!css-loader'
+                }
+            ]
+        },
+        plugins:[
+            new htmlwp({
+                title: '首页',  //生成的页面标题
+                filename: 'index.html', //webpack-dev-server在内存中生成的文件名称，自动将build注入到这个页面底部，才能实现自动刷新功能
+                template: 'index1.html' //根据index1.html这个模板来生成(这个文件请你自己生成)
+            })
+        ]
+    }
+                    </pre>
+                    <h3>1.1.2. webpack中loader介绍</h3>
+                    <p>loader介绍</p>
+                    <pre>
+            webpack本身不支持css,less,sass,js,image等相关资源的打包工作的，它仅仅提供了一个基础的框架，
+            在这个框架上借助于相关的loader才可以实现css,less,sass,js,image等相关资源的打包工作
+                    </pre>
+                    <h3>1.1.3. webpack相关配置</h3>
+                    <pre>
+            在使用loader之前需要在当前项目目录下打开cmd命令面板，输入: npm init 初始化一个 package.json文件来存放相关的 loader包
+                    </pre>
+                    <h4>1.1.3.1. 打包css资源演示</h4>
+                    <pre>
+            webpack中使用css-loader和style-loader这两个loader来处理css资源的打包工作，所以使用前必须在项目中先安装这两个包:
+            npm i css-loader style-loader --save-dev
+                    </pre>
+                    <p>在webpack.config.js中配置这两个loader </p>
+                    <img src="../img/wepimg.jpg" alt="" class="img-thumbnail">
+                    <p>在项目中建立一个site.css文件，并且在main.js中导入</p>
+                    <img src="../img/webpack2.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <p>在cmd中执行webpack命令 </p>
+                    <img src="../img/webpack3.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <h4>1.1.3.2. 打包sass资源演示</h4>
+                    <pre>
+            webpack中使用sass-loader，css-loader，style-loader来处理.scss文件的打包工作,
+            而sass-loader需要依赖于node-sass所以使用前必须在项目中先安装这些包，
+            并且node-sass的某些文件下载是需要去google上的，为了防止被墙而导致安装失败，所以建议使用cnpm来安装：
+            cnpm install node-sass sass-loader css-loader style-loader --save-dev
+                    </pre>
+                    <p>在webpack.config.js中配置这两个loader </p>
+                    <img src="../img/webpack4.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <p>在项目中建立一个site1.scss文件，并且在main.js中导入 </p>
+                    <img src="../img/webpack5.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <p>在cmd中执行webpack命令</p>
+                    <p> 在项目根目录下打开cmd命令面板，输入：webpack 回车即可打包完成 此时检查build.js文件的内容，sass语法是变成了css语法表示打包成功
+                    </p>
+                    <h4>1.1.3.3. 打包less资源演示</h4>
+                    <pre>
+            需要安装的node包有：
+            css-loader：  编译css
+            style-loader：编译css
+            less-loader： 编译less
+            less:  less-loader的依赖包
+        
+            在项目根目录下打开cmd命令面板，输入：
+            npm install less less-loader style-loader css-loader --save-dev 回车即可完成安装
+                    </pre>
+                    <li>在webpack.config.js中配置这两个loader</li>
+                    <img src="../img/webpack6.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <li>在项目中建立一个site1.scss文件，并且在main.js中导入</li>
+                    <img src="../img/webpack7.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <li>在cmd中执行webpack命令</li>
+                    <pre>
+            在根目录下打开cmd命令面板，输入：webpack  回车即可打包完成
+            此时检查build.js文件的内容，less语法是变成了css语法表示打包成功</pre>
+                    <h4>1.1.3.4. 打包url()请求的资源</h4>
+                    <pre>
+                            需要安装的node包有：
+                            url-loader：打包通过url()方式的请求资源
+                            file-loader: url-loader的依赖loader
+                        
+                            在项目根目录下打开cmd命令面板，输入：
+                            npm install url-loader file-loader --save-dev 回车即可完成安装
+                    </pre>
+                    <li>在webpack.config.js中配置这两个loader</li>
+                    <img src="../img/webpack8.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <li>在site.css文件导入一个图片</li>
+                    <img src="../img/webpack9.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <li>在cmd中执行webpack命令</li>
+                    <pre>
+        在项目根目录下打开cmd命令面板，输入：webpack  回车即可打包完成
+        检查是否成功分两种情况：
+        1、如果打包的图片大小大于配置文件中 url-loader?limit= 中的limit值的话，则会在目录下看到一张单独的一个图片
+        2、如果打包的图片大小小于等于配置文件中 url-loader?limit= 中的limit值的话，则会将图片以base64格式存储在build.js中
+        请按照上述两种情况去验证是否打包成功
+                    </pre>
+                    <h4>1.1.3.5. ECMAScript6语法转ECMAScript5语法</h4>
+                    <pre>
+        webpack2+已经能够不需要依赖于babel-loader 即可完成ES6语法的转换，但是如果使用的是webpack1则还需要安装相关包：
+        babel-core
+        babel-loader
+        babel-preset-es2015
+        babel-plugin-transform-runtime：这个包主要是使用webpack1.0打包.vue组件页面中的es6语法需要,webpack2+中不需要
+        在项目根目录下打开cmd命令面板，输入：
+        npm install babel-core babel-loader babel-preset-es2015 babel-plugin-transform-runtime  --save-dev 回车即可完成安装
+                    </pre>
+                    <li>在webpack.config.js中配置loader</li>
+                    <img src="../img/webpack10.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <li>在main.js中使用es6语法导入site.css</li>
+                    <pre>
+        import '.../statics/css/site.css'
+                    </pre>
+                    <li>在cmd中执行webpack命令</li>
+                    <pre>
+        在项目根目录下打开cmd命令面板，输入：webpack  回车即可打包完成
+        检查build.js文件中，如果出现了类似于 require('.../statics/css/site.css');
+        但是看不到import '.../statics/css/site.css' 表示转换成功
+                    </pre>
+                    <h4>1.1.3.6. 利用webpack-dev-server实现热刷新配置</h4>
+                    <pre>
+        我们在修改了代码以后需要不断的重新执行webpack命令重新打包然后回到浏览器刷新页面去查看，这种开发效率很低下，
+        所以这里使用webpack-dev-server当代码更新的时候自动重新打包和刷新浏览器。
+    
+        需要安装的node包有：
+            webpack@3.4.0  : webpack-dev-server依赖于webpack
+            webpack-dev-server@2.6.1 ： webpack开发服务器
+            html-webpack-plugin@2.28.0 ：结合webpack在内存中自动生成index.html的入口文件
+    
+    
+        在项目根目录下打开cmd命令面板，输入：
+        npm install webpack@3.4.0 webpack-dev-server@2.6.1 html-webpack-plugin@2.28.0  --save-dev 回车即可完成安装
+    
+        需要注意的是：package.json中的name属性不能是webpack，否则在执行 npm i webpack --save-dev的时候会报错：
+        Refusing to install webpack as a dependency of itself
+                    </pre>
+                    <li>在package.json文件中配置webpack-dev-server命令</li>
+                    <pre>
+        "scripts": {
+            "dev":"webpack-dev-server --inline --hot --open --port 5008"
+            }
+    
+        参数说明：
+        --inline :自动刷新
+        --hot :热加载
+        --port 指定监听端口为 5008
+        -- open : 自动在默认浏览器中打开
+        -- host： 可以指定服务器的ip，不指定默认为127.0.0.1(localhost)
+                    </pre>
+                    <li>配置html-webpack-plugin组件</li>
+                    <pre>
+        webpack-dev-server要实现浏览器自动刷新，必须要利用html-webpack-plugin在内存中生成index.html页面才能实现
+        html-webpack-plugin 配置步骤：
+        1、在webpack.config.js中加入如下代码：
+            // 导入html-webpack-plugin 包,获取到插件对象
+            var htmlwp = require('html-webpack-plugin');
+
+            plugins:[
+            new htmlwp({
+                title: '首页',  //生成的页面标题，需要在模板index1.html中的title中使用：<%= htmlWebpackPlugin.options.title %>
+                filename: 'index.html', //webpack-dev-server在内存中生成的文件名称，自动将build注入到这个页面底部，才能实现自动刷新功能
+                template: 'index1.html' //根据index1.html这个模板来生成(这个文件请程序员自己生成)
+            })
+        ]
+                    </pre>
+                    <li>index1.html 模板页面代码</li>
+                    <img src="../img/webpack11.jpg" alt="" class="" img-thumbnail "img-thumbnail">
+                    <li>运行</li>
+                    <pre>
+        在cmd中执行npm run dev 命令开启 webpack-dev-server服务器来运行vue项目
+        这时候可以随便修改一个css样式，就会自动刷新看到效果
+                    </pre>
+                    <h4>1.1.3.7. 利用webpack解析和打包 .vue组件页面</h4>
+                    <pre>
+                Vue项目中的每个页面其实都是一个.vue的文件，这种文件，Vue称之为组件页面，必须借助于 webpack的vue-loader才能使用
+                所以必须安装相关包：
+                    vue  : vuejs核心包
+                    vue-loader            ： .vue文件编译loader
+                    vue-template-compiler ： .vue模板编译,被vue-loader所依赖
+                    babel-plugin-transform-runtime : es6实时转换成es5语法
+            
+                 1、在项目根目录下打开cmd命令面板，输入：
+                   npm install vue-loader@11.3.4 vue-template-compiler@2.2.6 babel-plugin-transform-runtime@6.23.0 --save-dev 回车即可完成安装
+                   npm install vue@2.2.6 --save 回车即可完成安装
+            
+                   注意：babel-plugin-transform-runtime 这个包主要是为了兼容webpack1.x中使用，webpack2+中可以不用
+                   为了兼容webpack1.x，2.x,3.x 拷贝上面的安装命令全部安装即可
+            
+                 2、在项目根目录下新建 .babelrc文件，内容填写如下：
+                 {
+                       presets: ['es2015'],  
+                       plugins: ['transform-runtime']  //这句代码就是为了解决webpack1.x中打包.vue文件不报错，在webpack2+中正常
+                   }
+            
+            
+                3、在webpack.config.js中的loaders中增加
+                        {
+                            // 打包.vue文件
+                            test:/\.vue$/,   //表示当前要打包的文件的后缀正则表达式
+                            loader:'vue-loader' //
+                        }
+                </pre>
+                    <li>.vue组件页面的写法结构</li>
+                    <pre>
+                        1、npm install vue  --save
+                        2、在main.js中编写解析.vue的代码
+                           // 1.0 导入vue这个包
+                           import Vue from 'vue';
+                   
+                           // 2.0 导入 App.vue文件
+                           import App from '../App.vue';
+                   
+                           // 3.0 将App中的内容编译解析出来替换index.html中的&lt;div id="app"&gt;&lt;/div&gt;&lt;/kbd&gt;
+                           new Vue({
+                               el:'#app',
+                               // render:function(create){create(App);}  es5语法
+                               render:create=>create(App) //es6语法
+                           });
+                </pre>
+                    <h3>1.2. 项目中使用的ECMAScript6语法总结</h3>
+                    <pre>
+                1、对象的写法
+                es5中对象： {add:add,substrict:substrict}
+                es6中对象： {add,substrict}  注意这种写法的属性名称和值变量是同一个名称才可以简写，否则要想es5那样的写法,例如： {addFun:add}
+        
+            2、在对象中的方法的写法
+                es5中对象： {add:function(){},substrict:function(){}}
+                es6中对象： {add(){},substrict(){}}
+        
+            3、对象的导出写法
+                    es5两种形式：
+                    1、module.exports = fucntion (){};
+                    2、exprots.add =  fucntion (){};
+        
+                es6中写法：
+                1、export default{
+                    add(){}
+                }
+                2、export fucntion add(){} 相当于 将add方法当做一个属性挂在到exports对象
+        
+        
+            4、对象的导入
+                es5: var add  = require('../calc.js');
+                es6:
+                如果导出的是：export default{ add(){}}
+                那么可以通过  import obj from '../calc.js'
+        
+                如果导出的是：
+                export fucntion add(){}
+                export fucntion substrict(){}
+                export const PI=3.14
+        
+                那么可以通过按需加载 import {add,substrict,PI} from '../calc.js'
+        
+            5、es6中的箭头函数的写法
+                箭头的演变过程：
+                //需求：利用函数实现倒序排列
+                [2,1,3].sort(function(x,y){return y - x;});
+        
+                //用箭头函数实现 =>读 goes to
+                [2,1,3].sort((x,y)=>{return y - x;});
+                [2,1,3].sort((x,y)=> {x++;y++; y - x;});
+                [2,1,3].forEach(x=> {console.log(x)});
+                    </pre>
+                    <h3>1.3. Vue 官方命令行工具快速搭建大型单页应用</h3>
+                    <pre>
+        咱们前面从0到1带领大家一步步搭建了属于自己的WebPack+Vue项目，但其实Vue官方提供了一个快速搭建大型单页应用的工具Vue-cli
+        该工具提供开箱即用的构建工具配置，带来现代化的前端开发流程。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目
+                    </pre>
+                    <p>Vue-cli使用步骤</p>
+                    <ul>
+                        <li>1、在cmd命令面板中执行：npm install --global vue-cli 全局安装 vue-cli;</li>
+                        <li>2、利用：vue init webpack projectName(自定义项目名称) 创建一个基于webpack模板的新项目;</li>
+                        <li>3、进入到项目名称文件夹中执行 npm install 安装项目所需依赖;</li>
+                        <li>4、运行 npm run dev 运行项目;</li>
+                    </ul>
+
+
+
+
+
+
+
+
+
+
+                    <!--  -->
+                    <hr style="visibility: hidden;">
+
+
+                    <ul class="pager">
+
+                        <li class="previous">
+                            <a href="/2015/03/31/e2e_user_scenarios/" data-toggle="tooltip" data-placement="top" title="Definition of End to End User Scenarios">
+                        Previous<br>
+                        <span>Definition of End to End User Scenarios</span>
+                        </a>
+                        </li>
+
+
+                        <li class="next">
+                            <a href="/2015/04/15/os-metro/" data-toggle="tooltip" data-placement="top" title="hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇">
+                        Next<br>
+                        <span>hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇</span>
+                        </a>
+                        </li>
+
+                    </ul>
+
+
+
+                    <!-- disqus 评论框 start -->
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                    <!-- disqus 评论框 end -->
+
+
+
+                </div>
+
+                <!-- Side Catalog Container -->
+
+                <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                    <div class="side-catalog">
+                        <hr class="hidden-sm hidden-xs">
+                        <h5>
+                            <a class="catalog-toggle" href="#">CATALOG</a>
+                        </h5>
+                        <ul class="catalog-body"></ul>
+                    </div>
+                </div>
+
+
+                <!-- Sidebar Container -->
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                    <!-- Featured Tags -->
+
+                    <!-- <section>
+                        <hr class="hidden-sm hidden-xs">
+                        <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                        <div class="tags">
+
+
+                            <a href="/tags/#知乎" title="知乎" rel="7">
+                                    知乎
+                                </a>
+
+
+
+
+
+                            <a href="/tags/#Android" title="Android" rel="2">
+                                    Android
+                                </a>
+
+
+
+                            <a href="/tags/#交互设计" title="交互设计" rel="4">
+                                    交互设计
+                                </a>
+
+
+
+                            <a href="/tags/#阿里巴巴" title="阿里巴巴" rel="3">
+                                    阿里巴巴
+                                </a>
+
+
+
+                            <a href="/tags/#前端开发" title="前端开发" rel="13">
+                                    前端开发
+                                </a>
+
+
+
+                            <a href="/tags/#职业病" title="职业病" rel="3">
+                                    职业病
+                                </a>
+
+
+
+                            <a href="/tags/#生活" title="生活" rel="2">
+                                    生活
+                                </a>
+
+
+
+
+
+
+
+
+
+                            <a href="/tags/#hUX 随想录" title="hUX 随想录" rel="2">
+                                    hUX 随想录
+                                </a>
+
+
+
+
+
+                            <a href="/tags/#UX Design" title="UX Design" rel="3">
+                                    UX Design
+                                </a>
+
+
+
+                            <a href="/tags/#OS" title="OS" rel="2">
+                                    OS
+                                </a>
+
+
+
+
+
+
+
+
+
+
+
+                            <a href="/tags/#JavaScript" title="JavaScript" rel="10">
+                                    JavaScript
+                                </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <a href="/tags/#译文" title="译文" rel="2">
+                                    译文
+                                </a>
+
+
+
+
+
+                            <a href="/tags/#PWA" title="PWA" rel="5">
+                                    PWA
+                                </a>
+
+
+
+
+                        </div>
+                    </section> -->
+
+
+                    <!-- Friends Blog -->
+
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+
+                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+
+                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+
+                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+
+                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+
+
+
+    <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+    <!--   <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = "hux";
+        var disqus_identifier = "/2015/04/14/unix-linux-note";
+        var disqus_url = "https://huangxuan.me/2015/04/14/unix-linux-note/";
+
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> -->
+    <!-- disqus 公共JS代码 end -->
+
+
+
+
+    <!-- async load function -->
+    <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script>
+    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+    <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
+            anchors.options = {
+                visible: 'always',
+                placement: 'right',
+                icon: '#'
+            };
+            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+        })
+    </script>
+    <style>
+        /* place left on bigger screen */
+        
+        @media all and (min-width: 800px) {
+            .anchorjs-link {
+                position: absolute;
+                left: -0.75em;
+                font-size: 1.1em;
+                margin-top: -0.1em;
+            }
+        }
+    </style>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                    <!-- <p class="copyright text-muted">
+                        Copyright &copy; Hux Blog 2017
+                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
+                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
+                    </iframe> -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.min.js "></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+    <script src="../js/bootstrap.min.js "></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../js/hux-blog.min.js "></script>
+
+    <!-- Service Worker -->
+
+    <script src="../js/snackbar.js "></script>
+    <script src="../js/sw-registration.js "></script>
+
+
+    <!-- async load function -->
+    <!-- <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script> -->
+
+    <!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+    <!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+    <!-- jquery.tagcloud.js -->
+    <!-- <script>
+        // only load tagcloud.js in tag.html
+        if ($('#tag_cloud').length !== 0) {
+            async('/js/jquery.tagcloud.js', function() {
+                $.fn.tagcloud.defaults = {
+                    //size: {start: 1, end: 1, unit: 'em'},
+                    color: {
+                        start: '#bbbbee',
+                        end: '#0085a1'
+                    },
+                };
+                $('#tag_cloud a').tagcloud();
+            })
+        }
+    </script> -->
+
+    <!--fastClick.js -->
+    <!-- <script>
+        async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function() {
+            var $nav = document.querySelector("nav");
+            if ($nav) FastClick.attach($nav);
+        })
+    </script> -->
+
+
+    <!-- Google Analytics -->
+    <!-- 
+    <script>
+        // dynamic User by Hux
+        var _gaId = 'UA-49627206-1';
+        var _gaDomain = 'huangxuan.me';
+
+        // Originial
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', _gaId, _gaDomain);
+        ga('send', 'pageview');
+    </script> -->
+
+
+
+    <!-- Baidu Tongji -->
+
+
+
+    <!-- Side Catalog -->
+    <!-- 
+    <script type="text/javascript">
+        function generateCatalog(selector) {
+
+            // interop with multilangual 
+            if () {
+                _containerSelector = 'div.post-container.active'
+            } else {
+                _containerSelector = 'div.post-container'
+            }
+
+            // init
+            var P = $(_containerSelector),
+                a, n, t, l, i, c;
+            a = P.find('h1,h2,h3,h4,h5,h6');
+
+            // clean
+            $(selector).html('')
+
+            // appending
+            a.each(function() {
+                n = $(this).prop('tagName').toLowerCase();
+                i = "#" + $(this).prop('id');
+                t = $(this).text();
+                c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                l = $('<li class="' + n + '_nav"></li>').append(c);
+                $(selector).append(l);
+            });
+            return true;
+        }
+
+        generateCatalog(".catalog-body");
+
+        // toggle side catalog
+        $(".catalog-toggle").click((function(e) {
+            e.preventDefault();
+            $('.side-catalog').toggleClass("fold")
+        }))
+
+        /*
+         * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+         * Fork by Hux to support padding
+         */
+        async("../js/jquery.nav.js", function() {
+            $('.catalog-body').onePageNav({
+                currentClass: "active",
+                changeHash: !1,
+                easing: "swing",
+                filter: "",
+                scrollSpeed: 700,
+                scrollOffset: 0,
+                scrollThreshold: .2,
+                begin: null,
+                end: null,
+                scrollChange: null,
+                padding: 80
+            });
+        });
+    </script> -->
+
+
+
+    <!-- Multi-Lingual -->
+
+
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="../img/icon_wechat.png" width="0" height="0" /> -->
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
