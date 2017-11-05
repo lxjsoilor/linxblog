@@ -208,7 +208,7 @@
                 post-container">
                     <h1>keypress事件无法使用方向键的解决办法</h1>
                     <p>之前有个朋友问我（他正在用js练习做一个贪吃蛇的小游戏），为什么他的方向键没有反应，其他键都有响应，让我帮忙看看。</p>
-                    <p>结果我发现他键盘事件用的是keypress，因为我一般都是用onkeydown或者onkeyup，keypress还是用的很少的，所以我就让他换keydown试下。结果就可以了。于是，于是我又装了一波B。。。</p>
+                    <p>结果我发现他键盘事件用的是keypress，因为我一般都是用onkeydown或者onkeyup，keypress还是用的很少的，所以我就让他换keydown试下。结果就可以了。。</p>
                     <p>之后我也觉得奇怪，keypress应该也可以的，于是上谷歌找百度帮忙。于是发现keypress事件不能对系统功能键(例如：后退、删除等，其中对中文输入法不能有效响应)进行正常的响应。</p>
                     <p>而如果用keydown、keyup事件来做会有卡顿，如果用keypress事件来做，可是又无法操作上下左右按钮。之后我们给出的解决办法是通过keydown+keyup事件配合定时器完成keypress的模拟操作。具体代码如下:</p>
                     <p>
