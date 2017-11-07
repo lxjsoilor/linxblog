@@ -75,7 +75,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-                <a class="navbar-brand" href="/">Linx Blog</a>
+                <a class="navbar-brand" href="../index.html">Linx Blog</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -186,11 +186,6 @@
 
                         </div>
                         <h1>H5部分新特性笔记</h1>
-
-
-                        <!-- <h2 class="subheading">canvas+js+ps模块化制作双人射击小游戏</h2> -->
-
-                        <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
                 </div>
             </div>
@@ -206,14 +201,14 @@
                 col-md-10 col-md-offset-1
                 post-container">
                     <h1>H5部分新特性</h1>
-                    <h4><a href="javascript:;">#</a>网络状态</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;网络状态</a></h4>
+                    <ul style="display:none">
                         <li>navigator.online</li>
                         <li>事件 online 连接上网的时候触发</li>
                         <li>事件 offline 断开网络的时候触发</li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>地理位置</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;地理位置</a></h4>
+                    <ul style="display:none">
                         <li>avigator.geolocation.getCurrentPosition 接受三个参数 (获取成功的回调，失败的回调,配置参数) (success,error,{enableHighAccuracy(是否获取高精度):true,timeout(超时时间 ms),maximumAge(重新获取地理位置的时间 ms)})</li>
                         <li>success(position)成功的回调
                             <ul>
@@ -243,8 +238,8 @@
                             </ul>
                         </li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>储存</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;储存</a></h4>
+                    <ul style="display:none">
                         <li>cookie
                             <ul>
                                 <li>容量为3k左右</li>
@@ -258,43 +253,46 @@
                                 <li>js操作cookie</li>
                             </ul>
                         </li>
+                        <li>
+                            <pre>
+                //写入cookie
+                function setCookie(name, value) {
+                    var Days = 30;
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+                    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+                    }
+                        </pre>
+                            <pre>
+                function getCookie(name) {
+                    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+                    if (arr = document.cookie.match(reg)) {
+                        return unescape(arr[2]);
+                    }
+                    return null;
+                    }
+                        </pre>
+                            <pre>
+                function delCookie(name) {
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() - 1);
+                    var cval = getCookie(name);
+                    if (cval != null) {
+                        document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+                    }
+                    }
+                        </pre>
+                        </li>
                     </ul>
-                    <pre>
-            //写入cookie
-            function setCookie(name, value) {
-                var Days = 30;
-                var exp = new Date();
-                exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-                document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
-                }
-                    </pre>
-                    <pre>
-            function getCookie(name) {
-                var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-                if (arr = document.cookie.match(reg)) {
-                    return unescape(arr[2]);
-                }
-                return null;
-                }
-                    </pre>
-                    <pre>
-            function delCookie(name) {
-                var exp = new Date();
-                exp.setTime(exp.getTime() - 1);
-                var cval = getCookie(name);
-                if (cval != null) {
-                    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-                }
-                }
-                    </pre>
-                    <h4><a href="javascript:;">#</a>jq操作cookie-->jq.cookie</h4>
-                    <ul>
+
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;jq操作cookie-->jq.cookie</a></h4>
+                    <ul style="display:none">
                         <li>读取 $.cookie("name")</li>
                         <li>写入 $.cookie("name","value",{expires:7});</li>
                         <li>删除 $.cookie("name",null);</li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>sesstionStorage</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;sesstionStorage</a></h4>
+                    <ul style="display:none">
                         <li>大小约为5M</li>
                         <li>存在于当前会话中</li>
                         <li>点击超链接后还存在</li>
@@ -309,8 +307,8 @@
                             </ul>
                         </li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>localStorage</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;localStorage</a></h4>
+                    <ul style="display:none">
                         <li>大小为20M</li>
                         <li>关闭浏览器还存在</li>
                         <li>每一次发送请求不会带上</li>
@@ -319,8 +317,8 @@
                         <li>removeItem</li>
                         <li>clear</li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>web字体</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;web字体</a></h4>
+                    <ul style="display:none">
                         <li>不会失真</li>
                         <li>可操作性更高</li>
                         <li>主流制作图标的方式</li>
@@ -333,14 +331,14 @@
                             </ul>
                         </li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>全屏</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;全屏</a></h4>
+                    <ul style="display:none">
                         <li>谷歌 webkitRequestPullScreen</li>
                         <li>火狐 mozRequestPullScreen</li>
                         <li>ie msRequestPullscreen</li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>file</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;file</a></h4>
+                    <ul style="display:none">
                         <li>新的file对象 new FileReader()</li>
                         <li>fileReader.readAsText() 当作文本读取</li>
                         <li>fileReader.readAsDataURL 读取文件的路径 图片、视频、音乐</li>
@@ -348,8 +346,8 @@
                         <li>fileReader.onload 读取文件结束后执行</li>
                         <li>fileReader.result 在onload中 获取读取完的文件的结果</li>
                     </ul>
-                    <h4><a href="javascript:;">#</a>拖拽</h4>
-                    <ul>
+                    <h4 class="unfold"><a href="javascript:;"><span>+</span>&nbsp;拖拽</a></h4>
+                    <ul style="display:none">
                         <li>被拖拽的元素
                             <ul>
                                 <li>ondragstart 开始拖拽的时候</li>
@@ -540,6 +538,21 @@
 
     <script src="../js/snackbar.js "></script>
     <script src="../js/sw-registration.js "></script>
+    <script>
+        // 展开详细信息
+        $('.unfold').click(function() {
+            var ul = $(this).next('ul');
+            ul.toggle();
+            console.log(ul[0])
+            if (ul[0].style.display == 'block') {
+                $(this).children('a').children('span').html('-');
+            } else if (ul[0].style.display == 'none') {
+                $(this).children('a').children('span').html('+');
+            } else {
+                $(this).children('a').children('span').html('-');
+            }
+        })
+    </script>
 
 </body>
 
