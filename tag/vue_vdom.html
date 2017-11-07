@@ -178,15 +178,17 @@
                     <div class="post-heading">
                         <div class="tags">
 
-                            <a class="tag" href="javascript:;" title="OS">Vue2.</a>
+                            <a class="tag" href="javascript:;" title="Vue">Vue</a>
 
-                            <a class="tag" href="javascript:;" title="Unix">App</a>
+                            <a class="tag" href="javascript:;" title="">VirtualDOM</a>
 
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
 
                         </div>
-                        <h1>vue 2.0 外卖App练习demo</h1>
+                        <h1>VUE补漏：虚拟DOM</h1>
 
-                        <h2 class="subheading">vue2+vuex+vue-router+webpack+ES6</h2>
+
+                        <h2 class="subheading">vue虚拟dom的概念</h2>
 
                         <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
@@ -202,33 +204,68 @@
                 <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
-                post-container" style="padding:0">
+                post-container">
                     <style>
-                        #appdemo {
-                            margin: 0 auto;
-                            width: 380px;
-                            height: 650px;
-                        }
-                        
-                        iframe {
-                            width: 100%;
-                            height: 100%;
-                            display: inline-block;
-                            /* transform: scale(.8); */
+                        dd {
+                            text-indent: 2em;
                         }
                     </style>
-                    <p>
-                        vue 2.0 外卖App练习
-                    </p>
-                    <p>技术栈</p>
-                    <blockquote>
-                        vue2+vuex+vue-router+webpack+ES6
-                    </blockquote>
-                    <p>网上的这个教程一搜一大把，不过我是基于vue2.做的练习，而且没怎么看视频，只是盗图，所以很多思路可能不一样，有兴趣的朋友可以看看。</p>
-                    <a href="javascript:;">源代码地址</a>
-                    <div id="appdemo">
-                        <iframe src="./demo/elapp/index.html"></iframe>
-                    </div>
+                    <script src="../js/vue.js"></script>
+                    <h2>vue虚拟dom的概念</h2>
+                    <p>从vue2.0开始，vue引入了虚拟DOM的概念，实现虚拟DOM：因为浏览器中默认实现DOM更新的方式速度很慢，效率地下，所以需要通过自己实现虚拟DOM，来提高DOM更新效率！</p>
+                    <p>什么是虚拟DOM：就是利用JS对象的形式，来模拟一颗真正的DOM树。目的是提高DOM的渲染效率。</p>
+                    <pre>
+        // 页面上真实的DOM元素
+        &lt;ul id="domeId"&gt;
+            &lt;li&gt;list1&lt;/li&gt;
+            &lt;li&gt;list2&lt;/li&gt;
+        &lt;/ul&gt;</pre>
+                    <pre>
+        // 内存中的虚拟DOM
+        var vDom = {
+            tag:'ul',
+            attributes:{ id: 'domeId'},
+            children:[
+                {tag:'li',attributes:{},children:'list1'},
+                {tag:'li',attributes:{},children:'list2'}
+            ]
+        }</pre>
+                    <p>因为虚拟DOM是JS对象，所以操作它会很高效，但是虚拟DOM最终会转化成真实的DOM，所有有一套高效的虚拟DOM diff算法来操作虚拟DOM：</p>
+                    <h3>Diff算法：</h3>
+                    <dl>
+                        <dt>tree diff</dt>
+                        <dd>将新旧两颗DOM树，相同的层级节点，从上到下，逐层进行对比的过程，叫做tree diff。好处：对比次数少，当把整个DOM树每一层梳理完成之后，则就找到了需要更改的元素！</dd>
+                        <dt>component diff</dt>
+                        <dd>在对比每一层的时候，对每一层中的组件进行对比，如果组件类型相同，则暂时认为不需要修改，如果类型不相同，则删除旧组件，创建新组建，将新组建替换到旧组件的位置！</dd>
+                        <dt>element diff</dt>
+                        <dd>当组件类型相同的时候，需要对组件中的每一个元素进行对比，这种对比方式，叫做element Diff。</dd>
+                        <dd>在通过for循环，循环创建类型相同的组件或者元素的时候，最好为每一个创建的东西，添加一个唯一的`key`值，这样能提高我们虚拟DOM的对比效率！</dd>
+                    </dl>
+                    <li>Diff算法图：</li>
+                    <img src="../img/Diff.png" alt="">
+
+                    <p>vue中使用虚拟DOM可以通过render()方法来直接创建新节点：</p>
+                    <pre>
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world'
+            },
+            render(){
+                var vDom = this.$createElement;
+                return vDom(
+                            'div',
+                            {attrs:{id:'domeId'}},
+                            this.msg
+                        )
+            }
+        })
+                    </pre> 输出结果
+                    <pre>
+        //输出结果
+        &lt;div id="domeId"&gt;
+            hello world
+        &lt;/div&gt;</pre>
 
                     <!--  -->
                     <hr style="visibility: hidden;">
@@ -288,142 +325,30 @@
                 col-md-10 col-md-offset-1
                 sidebar-container">
 
-                    <!-- Featured Tags -->
-
-                    <!-- <section>
-                        <hr class="hidden-sm hidden-xs">
-                        <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                        <div class="tags">
-
-
-                            <a href="/tags/#知乎" title="知乎" rel="7">
-                                    知乎
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#Android" title="Android" rel="2">
-                                    Android
-                                </a>
-
-
-
-                            <a href="/tags/#交互设计" title="交互设计" rel="4">
-                                    交互设计
-                                </a>
-
-
-
-                            <a href="/tags/#阿里巴巴" title="阿里巴巴" rel="3">
-                                    阿里巴巴
-                                </a>
-
-
-
-                            <a href="/tags/#前端开发" title="前端开发" rel="13">
-                                    前端开发
-                                </a>
-
-
-
-                            <a href="/tags/#职业病" title="职业病" rel="3">
-                                    职业病
-                                </a>
-
-
-
-                            <a href="/tags/#生活" title="生活" rel="2">
-                                    生活
-                                </a>
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#hUX 随想录" title="hUX 随想录" rel="2">
-                                    hUX 随想录
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#UX Design" title="UX Design" rel="3">
-                                    UX Design
-                                </a>
-
-
-
-                            <a href="/tags/#OS" title="OS" rel="2">
-                                    OS
-                                </a>
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#JavaScript" title="JavaScript" rel="10">
-                                    JavaScript
-                                </a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#译文" title="译文" rel="2">
-                                    译文
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#PWA" title="PWA" rel="5">
-                                    PWA
-                                </a>
-
-
-
-
-                        </div>
-                    </section> -->
-
-
-                    <!-- Friends Blog -->
 
                     <hr>
                     <h5>FRIENDS</h5>
                     <ul class="list-inline">
 
-                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+                        <li><a href="http://mida.re/">乱序</a></li>
 
-                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
 
-                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
 
-                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+                        <li><a href="https://hmqk1995.github.io">Luke 的自留地</a></li>
 
-                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+
+                        <li><a href="https://blog.smdcn.net">SmdCn's Blog</a></li>
+
+                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+
+                        <li><a href="http://dhong.co">DHong Say</a></li>
+
+                        <li><a href="https://ingf.github.io/">尹峰以为</a></li>
+
+                        <li><a href="https://wepiaofei.github.io/blog/">前端神盾局</a></li>
 
                     </ul>
 
@@ -473,17 +398,7 @@
             s.parentNode.insertBefore(o, s);
         }
     </script>
-    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-    <!-- <script>
-        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
-            anchors.options = {
-                visible: 'always',
-                placement: 'right',
-                icon: '#'
-            };
-            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-        })
-    </script> -->
+
     <style>
         /* place left on bigger screen */
         
@@ -518,19 +433,12 @@
     <!-- jQuery -->
     <script src="../js/jquery.min.js "></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
     <script src="../js/bootstrap.min.js "></script>
 
-    <!-- Custom Theme JavaScript -->
     <script src="../js/hux-blog.min.js "></script>
-
-    <!-- Service Worker -->
 
     <script src="../js/snackbar.js "></script>
     <script src="../js/sw-registration.js "></script>
-
-
 
 </body>
 

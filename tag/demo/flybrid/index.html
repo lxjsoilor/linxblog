@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <meta name="format-detection" content="telephone=no">
+    <style>
+
+    </style>
+    <title>Flappy_Bird</title>
+    <script src="./js/common/util.js"></script>
+    <script src="./js/common/event.js"></script>
+    <script src="./js/common/base.js"></script>
+    <script src="./js/common/baseSprite.js"></script>
+    <script src="./js/common/imgLoad.js"></script>
+    <script src="./js/component/text.js"></script>
+    <script src="./js/component/timer.js"></script>
+    <script src="./js/component/button.js"></script>
+    <script src="./js/role/bird.js"></script>
+    <script src="./js/role/land.js"></script>
+    <script src="./js/role/pipe.js"></script>
+    <script src="./js/role/sky.js"></script>
+    <script src="./js/scene/baseScene.js"></script>
+    <script src="./js/scene/entryScene.js"></script>
+    <script src="./js/scene/gameScene.js"></script>
+    <script src="./js/scene/overScene.js"></script>
+    <script src="./js/flappy_bird.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        canvas {
+            transform: scale(.8);
+        }
+    </style>
+</head>
+
+<body>
+    <section id="flappy-bird"></section>
+    <script>
+        var flaB = new FlappyBird('#flappy-bird');
+        flaB.run();
+    </script>
+</body>
+
+</html>

@@ -18,7 +18,7 @@
             text-indent: 2em;
         }
     </style>
-    <link rel="manifest" href=".../manifest.json">
+    <link rel="manifest" href="../manifest.json">
 
     <!-- Favicon -->
     <!-- <link rel="shortcut icon" href="/img/favicon.ico"> -->
@@ -167,7 +167,7 @@
     <style type="text/css">
         header.intro-header {
             position: relative;
-            background-image: url('../img/post-bg-unix-linux.jpg')
+            background-image: url('../img/post-bg-unix-linux2.jpg')
         }
     </style>
     <header class="intro-header">
@@ -178,17 +178,13 @@
                     <div class="post-heading">
                         <div class="tags">
 
-                            <a class="tag" href="javascript:;" title="OS">Canvas</a>
+                            <a class="tag" href="javascript:;" title="js">Js</a>
 
-                            <a class="tag" href="javascript:;" title="Unix">Js</a>
-
-                            <a class="tag" href="javascript:;" title="Linux">Ps</a>
-
+                            <a class="tag" href="javascript:;" title="canvas">Canvas</a>
                         </div>
-                        <h1>僵尸大战游戏</h1>
+                        <h1>别人家的会飞的小鸟</h1>
 
-
-                        <h2 class="subheading">canvas+js+ps模块化制作双人射击小游戏</h2>
+                        <!-- <h2 class="subheading">vue2+vuex+vue-router+webpack+ES6</h2> -->
 
                         <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
@@ -204,15 +200,11 @@
                 <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
-                post-container">
-                    <p>看周围的朋友，经常在业余时间搞自己的小作品，小游戏。感觉自己也不能落伍，再加上大飞哥模块化开发会飞的小鸟的影响。我决定自己也来做个游戏，并且用到了大飞哥模块化开发的思路。</p>
-                    <p><a href="https://lxjsoilor.github.io/zombie/index.html" target="_blank">游戏地址</a></p>
-                    <p><a href="https://github.com/lxjsoilor/zombie" target="_blank">游戏源码</a></p>
-
+                post-container" style="padding:0">
                     <style>
                         #appdemo {
-                            width: 860px;
-                            height: 500PX;
+                            width: 830px;
+                            height: 700PX;
                         }
                         
                         iframe {
@@ -223,137 +215,45 @@
                             border: none;
                         }
                     </style>
-                    游戏演示：
+                    <p>
+                        别人家的会飞的小鸟
+                    </p>
+                    <p>不是我写的，但是代码写得很巧妙，模块分得很细，所以分享出来</p>
+                    <a href="javascript:;">源代码地址</a>
                     <div id="appdemo">
-                        <iframe src="./demo/zombie/index.html"></iframe>
+                        <iframe src="./demo/flybrid/index.html"></iframe>
                     </div>
 
-                    <p>整个游戏不知道有多少行代码，不过有20个js文件，封装着不同的功能对象。我也懒得去数多少行了。为了巩固一下学过的知识并给有需要的朋友一些小小的帮助，我就记录下整个游戏的制作过程。</p>
-                    <p>因为刚毕业的时候做过一年的设计工作，所以有设计的基础，所以除了游戏人物参考4399上《僵尸危机》flash游戏的人物UI设计，其他设计都是寻找素材PS合成。</p>
-                    <img src="../img/rolezombie.jpg" alt="psd源文件图片" class="img-thumbnail">
-                    <img src="../img/game_psd.jpg" alt="psd源文件图片" class="img-thumbnail">
-                    <p>整个程序包括3个文件夹和一个页面，images放着程序的所有图片（需要psd源文件的朋友可以找我拿），sounds文件存储程序的音效，index就不多说了。</p>
-                    <p>js文件就重点说下，没仔细数，大概有20个文件，main.js是入口文件，sailorGames.js是对其他js文件的调用，剩余的js文件都是对各个游戏对象功能的封装。显示见下图：</p>
-                    <img src="../img/游戏源代码.jpg" alt="psd源文件图片" class="img-thumbnail">
-                    <p>然后说下原理，源代码中最核心的模块就是sailorGames.js这个文件，我是这么理解的，游戏说白了就是动画，而动画就肯定有动画帧，我们就需要把每一帧各个对象需要完成的事情通过代码做出来就可以形成动画，然后通过鼠标和键盘可以改变动画剧情发展方向就形成了游戏。</p>
-                    <p>所以首先先要找到一个方法让这个循环一直进行下去。我用的是HTML5标准定义的requestAnimationFrame()方法，这个方法是接受一个函数作为参数，然后浏览器根据绘制的最佳时机调用这个函数，类似递归。</p>
-                    <p>
-                        <pre>
-                            
-    (function loop() {
-        if (!_this.isPause) {
-            //判断是否双人
-
-            // 人物绘制前清空图层
-            _this.role.clearRole();
-
-            // 绘制人物
-            _this.role.init();
-            // 重复执行人物移动函数
-            _this.roleCtrl1.moveStep();
-            // 绘制人物2
-            _this.role2 ? _this.role2.init() : '';
-            // 重复执行人物移动函数
-            _this.role2 ? _this.roleCtrl2.moveStep() : '';
-
-            // 获取僵尸数组传入创建创建子弹函数
-            _this.role.createBullet(_this.zombie.zombieArr);
-            _this.role2 ? _this.role2.createBullet(_this.zombie.zombieArr) : '';
-            // 重复绘制僵尸
-            // 获取人物坐标中心点
-            if (_this.dobuleRole) {
-                _this.roleXY = {
-                    role1: {
-                        x: _this.role.roleCx + _this.role.roleW / 2,
-                        y: _this.role.roleCy + _this.role.roleH / 2,
-                        isDie: _this.role.isDie,
-                    },
-                    role2: {
-                        x: _this.role2.roleCx + _this.role2.roleW / 2,
-                        y: _this.role2.roleCy + _this.role2.roleH / 2,
-                        isDie: _this.role2.isDie,
-                    }
-                };
-            } else {
-                _this.roleXY = {
-                    role1: {
-                        x: _this.role.roleCx + _this.role.roleW / 2,
-                        y: _this.role.roleCy + _this.role.roleH / 2,
-                        isDie: _this.role.isDie,
-                    },
-                };
-            }
-            _this.zombie.zombieMove(_this.roleXY);
-        };
-
-        requestAnimationFrame(loop);
-    })();
-                        </pre>
-                    </p>
-                    <p>
-                        有了上面这个循环，游戏框架大体就搭起来了，接下来只要把每一帧动画都需要发生的事情写入到上面的框架里面，浏览器就会自动帮我们运行了。
-                    </p>
-                    <p>
-                        游戏大体思路就是这样了，接下来是封装并且调用各个功能模块。下面是我的实现过程的备份，当时想着随便玩玩，没想着写很多代码，所以没有用git版本控制，用复制粘贴这种原始的备份方法，结果越写越多。。。
-                    </p>
-                    <img src="../img/gamecrouse.jpg" alt="psd源文件图片" class="img-thumbnail">
-                    <p>
-                        游戏简单逻辑实现就不在这里详谈了，我就讲下我觉得我做起来比较难搞的一些功能： 1，首先是丧尸朝着人物自动移动的功能，我这里用到了Math.asin()。通过获取人物和丧尸的水平距离w还有垂直距离h。再用勾股定理求取人物和丧尸的直线距离，再使用Math.asin()取得他们之间的夹角angle；
-                    </p>
-                    <p>
-                        <pre>
-                            // h为丧尸和主角的垂直距离
-                            // l为丧尸和主角的水平距离
-                            var angle = -Math.asin(h / l) * 180 / Math.PI;
-                        </pre>
-                    </p>
-                    <p>
-                        但是这个angle不是简单的0-360的范围(keng a!!)。取值范围是：-90
-                        <=angle<=90;于是要进行第二次判断，看下图。这个图是angle可能会取到的值。首先是angle>67.5则丧尸向下运动，angle
-                            <-67.5则丧尸先上运动。如果angle<22&&angle<-22，那么人物有可能在丧尸左边或者右边，那么就要进行二次判断，通过丧尸水平坐标和主角水平坐标的差值可以判断右边还是左边。。接下来的angle<-23&&angle>-67和angle>23&&angle
-                                <67也是通过计算水平差或者垂直差来获取正确的方向。。。 </p>
-                                    <img src="../img/asin.png" alt="psd源文件图片" class="img-thumbnail">
-                                    <p>
-                                        然后是丧尸避开障碍物功能的实现。我的实现思路是这样的，用到了是canva中的isPointInPath()，通过判断丧尸中心坐标点是否在障碍物路径内让丧尸短暂的失去之前的自动移动功能并且短暂进入另一种自动寻路的功能。封装的函数是： <kbd>autoMove: function(dire, obj, w, h) {........}</kbd>
-                                        <ul>
-                                            <li><kbd>dire</kbd>：丧尸此时的运动方向；</li>
-                                            <li><kbd>obj</kbd>：撞墙的丧尸对象；</li>
-                                            <li><kbd>w</kbd>：丧尸与人物的水平距离；</li>
-                                            <li><kbd>h</kbd>：丧尸与人物的垂直距离；</li>
-                                        </ul>
-                                    </p>
-                                    <p>
-                                        暂时就写到这里吧，做的时间比较仓促，都没有进行二次优化过，感觉有些算法并不是和合适，所以还需要修修改改。有兴趣的朋友可以去看下源代码，都保留着最初的注释。
-                                    </p>
-                                    <hr style="visibility: hidden;">
+                    <!--  -->
+                    <hr style="visibility: hidden;">
 
 
-                                    <ul class="pager">
+                    <ul class="pager">
 
-                                        <li class="previous">
-                                            <a href="/2015/03/31/e2e_user_scenarios/" data-toggle="tooltip" data-placement="top" title="Definition of End to End User Scenarios">
+                        <li class="previous">
+                            <a href="/2015/03/31/e2e_user_scenarios/" data-toggle="tooltip" data-placement="top" title="Definition of End to End User Scenarios">
                         Previous<br>
                         <span>Definition of End to End User Scenarios</span>
                         </a>
-                                        </li>
+                        </li>
 
 
-                                        <li class="next">
-                                            <a href="/2015/04/15/os-metro/" data-toggle="tooltip" data-placement="top" title="hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇">
+                        <li class="next">
+                            <a href="/2015/04/15/os-metro/" data-toggle="tooltip" data-placement="top" title="hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇">
                         Next<br>
                         <span>hUX 随想录（二）：操作系统的浪漫主义 —— Metro 篇</span>
                         </a>
-                                        </li>
+                        </li>
 
-                                    </ul>
+                    </ul>
 
 
 
-                                    <!-- disqus 评论框 start -->
-                                    <div class="comment">
-                                        <div id="disqus_thread" class="disqus-thread"></div>
-                                    </div>
-                                    <!-- disqus 评论框 end -->
+                    <!-- disqus 评论框 start -->
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                    <!-- disqus 评论框 end -->
 
 
 
@@ -598,11 +498,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-                    <!-- <p class="copyright text-muted">
-                        Copyright &copy; Hux Blog 2017
-                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
-                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
-                    </iframe> -->
+
                     </p>
                 </div>
             </div>
@@ -623,6 +519,7 @@
 
     <script src="../js/snackbar.js "></script>
     <script src="../js/sw-registration.js "></script>
+
 
 
 </body>

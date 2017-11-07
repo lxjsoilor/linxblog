@@ -178,15 +178,17 @@
                     <div class="post-heading">
                         <div class="tags">
 
-                            <a class="tag" href="javascript:;" title="OS">Vue2.</a>
+                            <a class="tag" href="javascript:;" title="静态">静态</a>
 
-                            <a class="tag" href="javascript:;" title="Unix">App</a>
+                            <a class="tag" href="javascript:;" title="实例">实例</a>
 
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
 
                         </div>
-                        <h1>vue 2.0 外卖App练习demo</h1>
+                        <h1>静态成员与实例成员的概念</h1>
 
-                        <h2 class="subheading">vue2+vuex+vue-router+webpack+ES6</h2>
+
+                        <!-- <h2 class="subheading">vue虚拟dom的概念</h2> -->
 
                         <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
@@ -202,33 +204,47 @@
                 <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
-                post-container" style="padding:0">
+                post-container">
                     <style>
-                        #appdemo {
-                            margin: 0 auto;
-                            width: 380px;
-                            height: 650px;
-                        }
-                        
-                        iframe {
-                            width: 100%;
-                            height: 100%;
-                            display: inline-block;
-                            /* transform: scale(.8); */
+                        dd {
+                            text-indent: 2em;
                         }
                     </style>
-                    <p>
-                        vue 2.0 外卖App练习
-                    </p>
-                    <p>技术栈</p>
-                    <blockquote>
-                        vue2+vuex+vue-router+webpack+ES6
-                    </blockquote>
-                    <p>网上的这个教程一搜一大把，不过我是基于vue2.做的练习，而且没怎么看视频，只是盗图，所以很多思路可能不一样，有兴趣的朋友可以看看。</p>
-                    <a href="javascript:;">源代码地址</a>
-                    <div id="appdemo">
-                        <iframe src="./demo/elapp/index.html"></iframe>
-                    </div>
+                    <script src="../js/vue.js"></script>
+                    <h2>静态成员与实例成员的概念</h2>
+                    <p>静态成员和实例成员这两个概念是从面向对象的编程语言中引入的，对应到JavaScript中的理解为：</p>
+                    <h5><a href="javascript:;">静态成员：</a></h5>
+                    <p>静态成员是指<b>静态属性</b>和<b>静态方法</b>，所谓静态，就是有构造函数提供的。</p>
+                    <h5><a href="javascript:;">实例成员：</a></h5>
+                    <p>实例成员是值<b>实例属性</b>和<b>实例方法</b>，所谓实例，就是由构造函数创建出来的对象。</p>
+                    <h5><a href="javascript:;">举例说明：</a></h5>
+                    <pre>
+        function Person(){
+            this.name = "zs",
+            this.sayHello = function(){
+                console.log("Hello World");
+            }
+        }
+        
+        //下面这个sayHi方法就是构造函数自己的方法，也就是静态方法
+        Person.sayHi = function(){
+            console.log("I'm a Person");
+        }
+        
+        //原型属性属于构造函数，所以原型属性是静态属性
+        Person.prototype = {};
+        var p = new Person();
+        
+        //这里的name是构造函数创建出来的实例对象的属性，所以是实例属性
+        p.name = "李四";
+        
+        
+        //这里的sayHello也是构造函数创建出来的实例对象的方法，所以是实例方法
+        p.sayHello();
+                    </pre>
+                    <p>一般工具型方法都有静态成员提供, 一般与实例对象有关的方法由实例成员表示.</p>
+                    <p>工具方法：比如`jQuery.Ajax()`、`jQuery.trim()`、`jQuery.Each()`</p>
+
 
                     <!--  -->
                     <hr style="visibility: hidden;">
@@ -288,142 +304,30 @@
                 col-md-10 col-md-offset-1
                 sidebar-container">
 
-                    <!-- Featured Tags -->
-
-                    <!-- <section>
-                        <hr class="hidden-sm hidden-xs">
-                        <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                        <div class="tags">
-
-
-                            <a href="/tags/#知乎" title="知乎" rel="7">
-                                    知乎
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#Android" title="Android" rel="2">
-                                    Android
-                                </a>
-
-
-
-                            <a href="/tags/#交互设计" title="交互设计" rel="4">
-                                    交互设计
-                                </a>
-
-
-
-                            <a href="/tags/#阿里巴巴" title="阿里巴巴" rel="3">
-                                    阿里巴巴
-                                </a>
-
-
-
-                            <a href="/tags/#前端开发" title="前端开发" rel="13">
-                                    前端开发
-                                </a>
-
-
-
-                            <a href="/tags/#职业病" title="职业病" rel="3">
-                                    职业病
-                                </a>
-
-
-
-                            <a href="/tags/#生活" title="生活" rel="2">
-                                    生活
-                                </a>
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#hUX 随想录" title="hUX 随想录" rel="2">
-                                    hUX 随想录
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#UX Design" title="UX Design" rel="3">
-                                    UX Design
-                                </a>
-
-
-
-                            <a href="/tags/#OS" title="OS" rel="2">
-                                    OS
-                                </a>
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#JavaScript" title="JavaScript" rel="10">
-                                    JavaScript
-                                </a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#译文" title="译文" rel="2">
-                                    译文
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#PWA" title="PWA" rel="5">
-                                    PWA
-                                </a>
-
-
-
-
-                        </div>
-                    </section> -->
-
-
-                    <!-- Friends Blog -->
 
                     <hr>
                     <h5>FRIENDS</h5>
                     <ul class="list-inline">
 
-                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+                        <li><a href="http://mida.re/">乱序</a></li>
 
-                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
 
-                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
 
-                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+                        <li><a href="https://hmqk1995.github.io">Luke 的自留地</a></li>
 
-                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+
+                        <li><a href="https://blog.smdcn.net">SmdCn's Blog</a></li>
+
+                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+
+                        <li><a href="http://dhong.co">DHong Say</a></li>
+
+                        <li><a href="https://ingf.github.io/">尹峰以为</a></li>
+
+                        <li><a href="https://wepiaofei.github.io/blog/">前端神盾局</a></li>
 
                     </ul>
 
@@ -473,17 +377,7 @@
             s.parentNode.insertBefore(o, s);
         }
     </script>
-    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-    <!-- <script>
-        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
-            anchors.options = {
-                visible: 'always',
-                placement: 'right',
-                icon: '#'
-            };
-            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-        })
-    </script> -->
+
     <style>
         /* place left on bigger screen */
         
@@ -518,19 +412,12 @@
     <!-- jQuery -->
     <script src="../js/jquery.min.js "></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
     <script src="../js/bootstrap.min.js "></script>
 
-    <!-- Custom Theme JavaScript -->
     <script src="../js/hux-blog.min.js "></script>
-
-    <!-- Service Worker -->
 
     <script src="../js/snackbar.js "></script>
     <script src="../js/sw-registration.js "></script>
-
-
 
 </body>
 

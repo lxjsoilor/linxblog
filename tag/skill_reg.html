@@ -75,7 +75,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-                <a class="navbar-brand" href="/">Hux Blog</a>
+                <a class="navbar-brand" href="/">Linx Blog</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -178,15 +178,17 @@
                     <div class="post-heading">
                         <div class="tags">
 
-                            <a class="tag" href="javascript:;" title="OS">Vue2.</a>
+                            <!-- <a class="tag" href="javascript:;" title="OS">git版本控制</a> -->
 
-                            <a class="tag" href="javascript:;" title="Unix">App</a>
+                            <!-- <a class="tag" href="javascript:;" title="Unix">分布式</a> -->
 
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
 
                         </div>
-                        <h1>vue 2.0 外卖App练习demo</h1>
+                        <h1>正则表达式基础</h1>
 
-                        <h2 class="subheading">vue2+vuex+vue-router+webpack+ES6</h2>
+
+                        <!-- <h2 class="subheading">canvas+js+ps模块化制作双人射击小游戏</h2> -->
 
                         <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
@@ -202,33 +204,92 @@
                 <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
-                post-container" style="padding:0">
-                    <style>
-                        #appdemo {
-                            margin: 0 auto;
-                            width: 380px;
-                            height: 650px;
-                        }
-                        
-                        iframe {
-                            width: 100%;
-                            height: 100%;
-                            display: inline-block;
-                            /* transform: scale(.8); */
-                        }
-                    </style>
-                    <p>
-                        vue 2.0 外卖App练习
-                    </p>
-                    <p>技术栈</p>
-                    <blockquote>
-                        vue2+vuex+vue-router+webpack+ES6
-                    </blockquote>
-                    <p>网上的这个教程一搜一大把，不过我是基于vue2.做的练习，而且没怎么看视频，只是盗图，所以很多思路可能不一样，有兴趣的朋友可以看看。</p>
-                    <a href="javascript:;">源代码地址</a>
-                    <div id="appdemo">
-                        <iframe src="./demo/elapp/index.html"></iframe>
-                    </div>
+                post-container">
+                    <h1>正则表达式基础</h1>
+                    <h4><a href="javascript:;" class="unfold">+</a>五大类</h4>
+                    <ul style="display:none;">
+                        <li>预定义类
+                            <ul>
+                                <li>/./ 除了\n、\r、“”，都可以匹配</li>
+                                <li>\d：匹配数字，\D：匹配非数字</li>
+                                <li>\s：匹配空格， \S：匹配非空格</li>
+                                <li>\w：匹配字母（包括_），\W：匹配非字母</li>
+                            </ul>
+                        </li>
+                        <li>简单类
+                            <ul>
+                                <li>/字符串/：要有一个完整的字符串才能被匹配，可以多加字符，但不能减少，顺序也不能颠倒，有他就行</li>
+                                <li>/[ 字符串 ]/：有字符串的任意一个字符都可以</li>
+                            </ul>
+                        </li>
+                        <li>负向类
+                            <ul>
+                                <li>/[ ^abc ]/：只要有abc这个字符串（或者其中的一个字符）就返回false</li>
+                            </ul>
+                        </li>
+                        <li>范围类
+                            <ul>
+                                <li>/[ 0-9 ]/</li>
+                            </ul>
+                        </li>
+                        <li>组合类
+                            <ul>
+                                <li>/ [ 0-5a-d ] /</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4><a href="javascript:;" class="unfold">+</a>边界</h4>
+                    <ul style="display:none;">
+                        <li>^$：同时用表示必须精确匹配</li>
+                    </ul>
+                    <h4><a href="javascript:;" class="unfold">+</a>量词</h4>
+                    <ul style="display:none;">
+                        <li>*：重复0次或者多次</li>
+                        <li>+：重复1次或者多次</li>
+                        <li>？：重复0次或者1次</li>
+                        <li>｛｝：重复几次
+                            <ul>
+                                <li>｛n｝：重复 n 次</li>
+                                <li>｛n，｝：最少重复 n 次</li>
+                                <li>｛n，m｝：最少n次，最多m次</li>
+                            </ul>
+                        </li>
+                        <li>|：或者，前面的或者后面的</li>
+                        <li>（）：提高运算优先级</li>
+                    </ul>
+                    <h4><a href="javascript:;" class="unfold">+</a>匹配模式</h4>
+                    <ul style="display:none;">
+                        <li>g：全局模式</li>
+                        <li>i：不区分大小写模式</li>
+                        <li>m：匹配换行</li>
+                    </ul>
+                    <h4><a href="javascript:;" class="unfold">+</a>匹配中文</h4>
+                    <ul style="display:none;">
+                        <li>匹配中文：/^[\u4e00-\u9fa5]{2,4}$/ </li>
+                    </ul>
+                    <h4><a href="javascript:;" class="unfold">+</a>API</h4>
+                    <ul style="display:none;">
+                        <li>exec()
+                            <ul>
+                                <li>reg.exec(str)</li>
+                                <li>字符串中指定的值（）带括号的就是指定的值。返回找到的值，并确定其位置。</li>
+                                <li>找到了匹配的文本，则返回一个结果数组,否则返回null</li>
+                            </ul>
+                        </li>
+                        <li>match()
+                            <ul>
+                                <li>str.match(reg)</li>
+                                <li>如果正则是全局匹配，返回字符串中所有指定的值，成为数组</li>
+                            </ul>
+                        </li>
+                        <li>test()
+                            <ul>
+                                <li>reg.test(str)</li>
+                                <li>检索字符串中指定的值。返回 true 或 false。</li>
+                            </ul>
+                        </li>
+                    </ul>
+
 
                     <!--  -->
                     <hr style="visibility: hidden;">
@@ -261,8 +322,6 @@
                     </div>
                     <!-- disqus 评论框 end -->
 
-
-
                 </div>
 
                 <!-- Side Catalog Container -->
@@ -287,129 +346,6 @@
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 sidebar-container">
-
-                    <!-- Featured Tags -->
-
-                    <!-- <section>
-                        <hr class="hidden-sm hidden-xs">
-                        <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                        <div class="tags">
-
-
-                            <a href="/tags/#知乎" title="知乎" rel="7">
-                                    知乎
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#Android" title="Android" rel="2">
-                                    Android
-                                </a>
-
-
-
-                            <a href="/tags/#交互设计" title="交互设计" rel="4">
-                                    交互设计
-                                </a>
-
-
-
-                            <a href="/tags/#阿里巴巴" title="阿里巴巴" rel="3">
-                                    阿里巴巴
-                                </a>
-
-
-
-                            <a href="/tags/#前端开发" title="前端开发" rel="13">
-                                    前端开发
-                                </a>
-
-
-
-                            <a href="/tags/#职业病" title="职业病" rel="3">
-                                    职业病
-                                </a>
-
-
-
-                            <a href="/tags/#生活" title="生活" rel="2">
-                                    生活
-                                </a>
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#hUX 随想录" title="hUX 随想录" rel="2">
-                                    hUX 随想录
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#UX Design" title="UX Design" rel="3">
-                                    UX Design
-                                </a>
-
-
-
-                            <a href="/tags/#OS" title="OS" rel="2">
-                                    OS
-                                </a>
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#JavaScript" title="JavaScript" rel="10">
-                                    JavaScript
-                                </a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/tags/#译文" title="译文" rel="2">
-                                    译文
-                                </a>
-
-
-
-
-
-                            <a href="/tags/#PWA" title="PWA" rel="5">
-                                    PWA
-                                </a>
-
-
-
-
-                        </div>
-                    </section> -->
-
-
-                    <!-- Friends Blog -->
 
                     <hr>
                     <h5>FRIENDS</h5>
@@ -504,12 +440,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-                    <!-- <p class="copyright text-muted">
-                        Copyright &copy; Hux Blog 2017
-                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
-                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
-                    </iframe> -->
-                    </p>
+
                 </div>
             </div>
         </div>
@@ -531,6 +462,18 @@
     <script src="../js/sw-registration.js "></script>
 
 
+    <!-- 数据展开 -->
+    <script>
+        $('.unfold').click(function() {
+            var ul = $(this).parent('h4').next();
+            ul.toggle();
+            if (ul.css('display') == 'none') {
+                $(this).html('+');
+            } else {
+                $(this).html('-');
+            }
+        })
+    </script>
 
 </body>
 
