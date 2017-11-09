@@ -294,3 +294,14 @@ pre,
     color: #999;
     background-color: #EAF2F5;
 }
+
+.contact {
+    cursor: pointer;
+    transition: all .2s;
+    /* margin-left: 20px; */
+    opacity: 0.6;
+}
+
+.contact:hover {
+    opacity: 0.9;
+}
