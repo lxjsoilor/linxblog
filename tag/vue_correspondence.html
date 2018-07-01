@@ -177,13 +177,18 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
                         <div class="tags">
-                            <a class="tag" href="javascript:;" title="js">Js</a>
-                            <a class="tag" href="javascript:;" title="canvas">Canvas</a>
-                            <a class="tag" href="javascript:;" title="canvas">cocos</a>
-                        </div>
-                        <h1>游戏练习集合</h1>
 
-                        <!-- <h2 class="subheading">vue2+vuex+vue-router+webpack+ES6</h2> -->
+                            <a class="tag" href="javascript:;" title="vue">vue</a>
+
+                            <a class="tag" href="javascript:;" title="组件通讯">组件通讯</a>
+
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
+
+                        </div>
+                        <h1>vue复习：vue组件通信</h1>
+
+
+                        <!-- <h2 class="subheading">vue虚拟dom的概念</h2> -->
 
                         <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
@@ -199,66 +204,57 @@
                 <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
-                post-container" style="padding:0">
+                post-container">
                     <style>
-                        #appdemo {
-                            width: 830px;
-                            height: 700PX;
-                        }
-                        
-                        iframe {
-                            width: 100%;
-                            height: 100%;
-                            display: inline-block;
-                            overflow: hidden;
-                            border: none;
+                        dd {
+                            text-indent: 2em;
                         }
                     </style>
-                    <p>
-                        游戏练习集合
-                    </p>
-
-                    <div id="appdemo">
-                        <a href="https://lxjsoilor.github.io/zombie/index.html">原生JS双人游戏</a>
-                        <iframe src="./demo/zombiemin/index.html"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myRunCool/">cocos creator练习</a></p>
-
-                    <div id="appdemo" style="height:400px">
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myRunCool/"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myBall/">cocos creator练习</a></p>
-
-                    <div id="appdemo" style="height:900px">
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myBall/"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/3DMine/index.html">原生JS3D扫雷制作</a></p>
-
-                    <div id="appdemo" style="height:900px">
-
-                        <iframe src="https://lxjsoilor.github.io/3DMine/index.html"></iframe>
-                    </div>
-
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myTiledMap/">瓦片游戏练习</a></p>
-                    <div id="appdemo" style="height:900px">
-
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myTiledMap/"></iframe>
-                    </div>
-
-
-
-                    <div id="appdemo">
-                        <iframe src="./demo/flybrid/index.html"></iframe>
-                    </div>
+                    <script src="../js/vue.js"></script>
+                    <h2>vue组件通信</h2>
+                    <p>组件 (Component) 是 Vue.js 最强大的功能之一。我的理解组件就是封装起来可以重复使用的html代码，传统的多页面应用页面之间的数据传递主要是依赖URL传递，或者cookie、localStorage等方式，vue单页面应用是组件化开发，没有页面之间的数据传递，但是存在各个组件之间的数据传递。所以组件之间的数据传递是非常有必要的；而vuex就是专门来处理组件之间数据传递的一个很全面的工具；</p>
+                    <h5><a href="javascript:;">单页面应用：</a></h5>
+                    <img src="../img/vue/vue_01.png" alt="">
+                    <h5><a href="javascript:;">多页面应用：</a></h5>
+                    <img src="../img/vue/vue_02.png" alt="">
+                    <h3><a href="javascript:;">1.组件通讯</a></h3>
+                    <p>组件通讯包括：父子组件之间的通信和兄弟组件之间的通信。</p>
+                    <p>1)父组件 --> 子组件</p>
+                    <p>a)属性传递</p>
+                    <p>发送：父组件通过对子组件绑定一个属性，这个属性的值将会传递给子组件。</p>
+                    <img src="../img/vue/vue_03.png" alt="">
+                    <p>接收：子转件通过vue实例化属性props接收父组件传递过来的数据，有两种接收的方式：</p>
+                    <img src="../img/vue/vue_04.png" alt="">
+                    <p>b)子组件直接调用父组件，有两种调用，一是调用父组件$parent 二是调用根组件$root:</p>
+                    <p>父组件信息：</p>
+                    <img src="../img/vue/vue_05.png" alt="">
+                    <p>在main.js里面定义的根组件：</p>
+                    <img src="../img/vue/vue_06.png" alt="">
+                    <p>子组件获取信息：</p>
+                    <img src="../img/vue/vue_07.png" alt="">
+                    <p>2)子组件 --> 父组件</p>
+                    <p>a)通过发送事件和监听事件实现</p>
+                    <p>发送事件（触发事件）：this.$emit(事件名，参数)；</p>
+                    <img src="../img/vue/vue_08.png" alt="">
+                    <p>监听事件（事件响应）：</p>
+                    <img src="../img/vue/vue_09.png" alt="">
+                    <p>b)父组件直接获取子组件属性和方法</p>
+                    <p>我们可以给子组件起个名字。将名字设置为子组件ref属性的值；</p>
+                    <img src="../img/vue/vue_10.png" alt="">
+                    <h5>以上都是直接父子组件的传递数据的方法；如果是爷爷传给孙子，就需要爷爷传给爸爸，再传给儿子；如果是兄弟就要把数据传给爸爸再传给兄弟；所以会很麻烦；</h5>
+                    <h3><a href="javascript:;">2.全局事件总线，用来处理兄弟，祖父祖孙组件之间的通信。</a></h3>
+                    <p>方法就是使用一个空的vue实例（Bus）作为全局事件总线；</p>
+                    <img src="../img/vue/vue_11.png" alt="">
+                    <p>各组件可自己定义好组件内接收外部组件的消息事件即可，不用理会是哪个组件发过来；而对于发送事件的组件，亦不用理会这个事件到底怎么发送给我需要发送的组件。 </p>
+                    <p>a)定义一个空的vue实例；</p>
+                    <img src="../img/vue/vue_12.png" alt="">
+                    <p>b)在需要用到的地方引入Bus.js；</p>
+                    <p>监听自定义事件</p>
+                    <img src="../img/vue/vue_13.png" alt="">
+                    <p>触发自定义事件</p>
+                    <img src="../img/vue/vue_14.png" alt="">
                     <!--  -->
                     <hr style="visibility: hidden;">
-
-
-
                 </div>
 
                 <!-- Side Catalog Container -->
@@ -284,19 +280,30 @@
                 col-md-10 col-md-offset-1
                 sidebar-container">
 
+
                     <hr>
                     <h5>FRIENDS</h5>
                     <ul class="list-inline">
+<!-- 
+                        <li><a href="http://mida.re/">乱序</a></li>
 
-                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
 
-                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
 
-                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+                        <li><a href="https://hmqk1995.github.io">Luke 的自留地</a></li>
 
-                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
 
-                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+                        <li><a href="https://blog.smdcn.net">SmdCn's Blog</a></li>
+
+                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+
+                        <li><a href="http://dhong.co">DHong Say</a></li>
+
+                        <li><a href="https://ingf.github.io/">尹峰以为</a></li>
+
+                        <li><a href="https://wepiaofei.github.io/blog/">前端神盾局</a></li> -->
 
                     </ul>
 
@@ -346,17 +353,7 @@
             s.parentNode.insertBefore(o, s);
         }
     </script>
-    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-    <!-- <script>
-        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
-            anchors.options = {
-                visible: 'always',
-                placement: 'right',
-                icon: '#'
-            };
-            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-        })
-    </script> -->
+
     <style>
         /* place left on bigger screen */
         
@@ -377,7 +374,11 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-
+                    <!-- <p class="copyright text-muted">
+                        Copyright &copy; Hux Blog 2017
+                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
+                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
+                    </iframe> -->
                     </p>
                 </div>
             </div>
@@ -387,19 +388,12 @@
     <!-- jQuery -->
     <script src="../js/jquery.min.js "></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
     <script src="../js/bootstrap.min.js "></script>
 
-    <!-- Custom Theme JavaScript -->
     <script src="../js/hux-blog.min.js "></script>
-
-    <!-- Service Worker -->
 
     <script src="../js/snackbar.js "></script>
     <script src="../js/sw-registration.js "></script>
-
-
 
 </body>
 

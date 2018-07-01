@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+
+
+    <title>Linx Blog</title>
+
+    <!-- Web App Manifest -->
+    <style>
+        .container p {
+            text-indent: 2em;
+        }
+    </style>
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="/img/favicon.ico"> -->
+
+    <!-- Canonical URL -->
+    <!-- <link rel="canonical" href="https://huangxuan.me/2015/04/14/unix-linux-note/"> -->
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="../css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+
+<body ontouchstart="">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="../index.html">Linx Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="huxblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="../index.html">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="../about.html">About</a>
+                        </li>
+                        <!-- 
+                        <li>
+                            <a href="/portfolio/">Portfolio</a>
+                        </li> -->
+
+                        <li>
+                            <a href="../tags.html">Tags</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#huxblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __HuxNav__ = {
+            close: function() {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function() {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function() {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function(e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __HuxNav__.close()
+            } else {
+                __HuxNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close HuxNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function(e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __HuxNav__.close();
+        })
+    </script>
+
+
+    <!-- Image to hack wechat -->
+    <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+    <!-- <img src="/img/post-bg-unix-linux.jpg" width="0" height="0"> -->
+
+    <!-- Post Header -->
+    <style type="text/css">
+        header.intro-header {
+            position: relative;
+            background-image: url('../img/post-bg-unix-linux2.jpg')
+        }
+    </style>
+    <header class="intro-header">
+        <div class="header-mask"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <div class="tags">
+
+                            <a class="tag" href="javascript:;" title="map">map</a>
+
+                            <a class="tag" href="javascript:;" title="高德地图">高德地图</a>
+
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
+
+                        </div>
+                        <h1>高德地图笔记</h1>
+
+
+                        <!-- <h2 class="subheading">vue虚拟dom的概念</h2> -->
+
+                        <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                    <style>
+                        dd {
+                            text-indent: 2em;
+                        }
+                    </style>
+                    <script src="../js/vue.js"></script>
+                    <h2>高德地图笔记</h2>
+                    <p>前言：中国目前有3家开放API的地图：腾讯，百度，高德；（国外还有谷歌地图）
+                       哪个好？哪个不好？请自行百度，，</p>
+                       <ul>
+                           <li>问：我想成为一个牛逼的工程师，有没有必要所有地图都学会？</li>
+                           <li>答：完全没必要！</li>
+                       </ul>
+                    <h5><a href="javascript:;">正式开始</a></h5>
+                    <p>获取key：很简单，就注册账号走走走走走~~~</p>
+                    <p>1.装在地图的容器：宽、高、id</p>
+                    <img src="../img/map/map_01.png" alt="">
+                    <p>2.UMD引入 高德地图外链js</p>
+                    <img src="../img/map/map_02.png" alt="">
+                    <p>这里有3点需要讲解：</p>
+                    <img src="../img/map/map_03.png" alt="">
+                    
+                       <ul>
+                           <li>v=xxxx				//你使用高德地图的版本</li>
+                           <li>key=xxx				//你项目申请高德地图的key</li>
+                           <li>plugin=xxxx			//这里的放在这里是同步执行 ，既该插件js加载的时候，一起加载
+                                //高德地图，你使用了那些功能组件？多个功能组件的时候，用 逗号 隔开
+                            <br>AMap.Geocoder,AMap.Walking,AMap.ttttt,AMap.aaaa <br>
+                            AMap.Geocoder		//经纬度转地名<br>
+                            AMap.Walking		//路线规划<br>
+                            AMap.ttttt			//…… 不一一展开说明，请自己去看高德API文档</li>
+                            <li><a href="http://lbs.amap.com/api/javascript-api/gettingstarted">http://lbs.amap.com/api/javascript-api/gettingstarted</a>   //高德有哪些插件 滚到最底部</li>
+                       </ul>
+                    
+                    <img src="../img/map/map_04.png" alt="">
+                    <p>3.满足前面3点，即调起高德地图</p>
+                    <img src="../img/map/map_05.png" alt="">
+                    <img src="../img/map/map_06.png" alt="">
+                    <h5><a href="javascript:;">进阶 API调用</a></h5>
+                    <p>1.实例化地图的时，一起参数设置进去。</p>
+                    <img src="../img/map/map_07.png" alt="">
+                    <img src="../img/map/map_08.png" alt="">
+                    <p>//地图就会根据你设置好的参数相应变化</p>
+                    <p>PS：new AMap？ 一切万物皆对象，构造函数通过 new 实例化成一个对象！</p>
+                    <p>2.先实例化地图，在设置里面的东西</p>
+                    <img src="../img/map/map_09.png" alt="">
+                    <p>两个知识点</p>
+                    <ul>
+                        <li>1.问题：实例化地图的同时，把参数设置进去？实例化后再设置参数？两者有什么区别？</li>
+                        <li>答：从上到下进行加载，有先后顺序，先实例化，再设置参数，会有明显的感觉，0.3秒的闪白。</li>
+                        <li>建议：
+                                实例化地图的时候，把最最最最重要的几个参数，设置进去，如：中心点、放大倍数……</li>
+                    </ul>
+                    <ul>
+                        <li>2.set 和 get 的方法的运用</li>
+                        <li>实例化地图参数，参数名：xxx</li>
+                        <li>设置这个参数：setXxx</li>
+                        <li>得到这个参数：getXxx</li>
+                    </ul>
+                    <img src="../img/map/map_10.png" alt="">
+                    <p>3.地图上有什么参数可以设置？请看API文档</p>
+                    <a href="http://lbs.amap.com/api/javascript-api/reference/map">http://lbs.amap.com/api/javascript-api/reference/map</a>
+                    <img src="../img/map/map_11.png" alt="">
+                    <p>在这些参数名前面，加上 set 或 get ，就是方法（必须标准的驼峰写法）</p>
+                    <p>4.事件。地图类引用，本质上，也是DOM操作。</p>
+                    <p>DOM操作，我重复过很多遍，千变万化，核心就三点：节点、事件、逻辑。</p>
+                    <p>请看API文档<a href="http://lbs.amap.com/api/javascript-api/reference/map">http://lbs.amap.com/api/javascript-api/reference/map</a> ，滚到下面</p>
+                    <img src="../img/map/map_12.png" alt="">
+                    <p>// 还有很多很多~~~~你自己慢慢看</p>
+                    <img src="../img/map/map_13.png" alt="">
+                    <p>还有很多事件，比如：点击地图时执行xxx，滚动鼠标地图缩放时执行xxx
+                            看你项目逻辑和需求，配合文档使用</p>
+                    <p>5.全屏幕地图应用</p>
+                    <p>即便是实例化地图时，把参数设置进去，但是，始终会有零点几秒的闪白</p>
+                    <p>处理方法：</p>
+                    <img src="../img/map/map_14.png" alt="">
+                    <p>如果非全屏类的地图应用，仅在页面中间部分才出现地图，无需加loading。 因为，鼠标滚动下去的时候，地图已经加载完成了。</p>
+                    <p>6.简单的工具类运用：marker点 ，icon图标，范围圈，提示框（默认样式/自定义HTML）</p>
+                    <img src="../img/map/map_15.png" alt="">
+                    <img src="../img/map/map_16.png" alt="">
+                    <p>注意：他们的写法都是 new AMap.xxx({xxxx});  也同样支持 get 和 set 的方法
+                            更多用法，请根据项目需求，自行看API文档</p>
+                    <p>7.刚刚好布满屏幕，</p>
+                    <p>地图容器的宽高是固定的，<br>
+                            形势轨迹的不定的（可能长，可能短，可能超级长，可能超级短）<br>
+                            如何，让数据，刚刚好填充满这个屏幕？</p>
+                    <img src="../img/map/map_17.png" alt="">
+
+                    <p>//在这句话作用下，你手动设置的zoom就会不生效</p>
+                    <h5><a href="javascript:;">硬性知识篇</a></h5>
+                    <p>1.中心的写法：[113.730411,23.003329]  或 {lng: 113.730411,lag: 23.003329};  支持两种写法</p>
+                    <p>2.中心点即为经纬度，有经纬度，就涉及了坐标体系</p>
+                    <p>最常见的坐标体系有3种：</p>
+                    <ul>
+                        <li>1.地球坐标- WGS84</li>
+                        <li>2.火星坐标（国测局坐标）- GCJ-02</li>
+                        <li>3.百度坐标- BD-09</li>
+                    </ul>
+                    <p>高德、腾讯使用的都是 地球坐标；</p>
+                    <p>百度地图，为什么自己单独搞了一套坐标？原因不详，汗颜~~</p>
+                    <p>4.坐标体系的兼容性，高德、腾讯都是使用火星坐标，如果硬生生的，往里面塞一个，地球坐标会怎样？
+                            答：同样能显示，但是，但是会存在10公里左右的偏差</p>
+                    <p>5.不同体系坐标之间存在换算关系，可以解决，网上一搜就有。</p>
+                    <p>6.坐标 《=》 地址   的相互转化		AMap.Geocoder</p>
+                    <ul>
+                        <li><a href="http://lbs.amap.com/api/javascript-api/reference/lnglat-to-address/#m_AMap.Geocoder">http://lbs.amap.com/api/javascript-api/reference/lnglat-to-address/#m_AMap.Geocoder</a></li>
+                        <li>地址 转 坐标，叫 正编码（全称：正向地理编码）</li>
+                        <li>坐标 转 地址，叫 逆编码（全称：逆向地理编码）</li>
+                    </ul>
+                    <p>7.查询，附近有多少个公交站？酒店？便利店？餐馆？学校？电影院？市场？<br>
+                            这个功能，叫  POI</p>
+                            <ul>
+                                <li>演示地址：<a href="http://lbs.amap.com/api/javascript-api/example/poi-search/keywords-search">http://lbs.amap.com/api/javascript-api/example/poi-search/keywords-search</a></li>
+                                <li>API地址：AMap.PlaceSearch <a href="http://lbs.amap.com/api/javascript-api/guide/map-data/search/">http://lbs.amap.com/api/javascript-api/guide/map-data/search/</a>滚到页面中间</li>
+                            </ul>
+                    <img src="../img/map/map_18.png" alt="">
+                    
+                    <!--  -->
+                    <hr style="visibility: hidden;">
+                </div>
+
+                <!-- Side Catalog Container -->
+
+                <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                    <div class="side-catalog">
+                        <hr class="hidden-sm hidden-xs">
+                        <h5>
+                            <a class="catalog-toggle" href="#">CATALOG</a>
+                        </h5>
+                        <ul class="catalog-body"></ul>
+                    </div>
+                </div>
+
+
+                <!-- Sidebar Container -->
+                <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+<!-- 
+                        <li><a href="http://mida.re/">乱序</a></li>
+
+                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
+
+                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
+
+                        <li><a href="https://hmqk1995.github.io">Luke 的自留地</a></li>
+
+                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+
+                        <li><a href="https://blog.smdcn.net">SmdCn's Blog</a></li>
+
+                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+
+                        <li><a href="http://dhong.co">DHong Say</a></li>
+
+                        <li><a href="https://ingf.github.io/">尹峰以为</a></li>
+
+                        <li><a href="https://wepiaofei.github.io/blog/">前端神盾局</a></li> -->
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+
+
+
+
+    <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+    <!--   <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = "hux";
+        var disqus_identifier = "/2015/04/14/unix-linux-note";
+        var disqus_url = "https://huangxuan.me/2015/04/14/unix-linux-note/";
+
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script> -->
+    <!-- disqus 公共JS代码 end -->
+
+
+
+
+    <!-- async load function -->
+    <script>
+        function async(u, c) {
+            var d = document,
+                t = 'script',
+                o = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            o.src = u;
+            if (c) {
+                o.addEventListener('load', function(e) {
+                    c(null, e);
+                }, false);
+            }
+            s.parentNode.insertBefore(o, s);
+        }
+    </script>
+
+    <style>
+        /* place left on bigger screen */
+        
+        @media all and (min-width: 800px) {
+            .anchorjs-link {
+                position: absolute;
+                left: -0.75em;
+                font-size: 1.1em;
+                margin-top: -0.1em;
+            }
+        }
+    </style>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                    <!-- <p class="copyright text-muted">
+                        Copyright &copy; Hux Blog 2017
+                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
+                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
+                    </iframe> -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../js/jquery.min.js "></script>
+
+    <script src="../js/bootstrap.min.js "></script>
+
+    <script src="../js/hux-blog.min.js "></script>
+
+    <script src="../js/snackbar.js "></script>
+    <script src="../js/sw-registration.js "></script>
+
+</body>
+
+</html>

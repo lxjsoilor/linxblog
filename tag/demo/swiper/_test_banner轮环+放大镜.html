@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+	<meta name="renderer" content="webkit|ie-comp">
+	<meta name="keywords" content="XXXX|XX|XXX|XXX|XXX" />
+	<meta name="description" content="关键词描述XXXX" />
+	<title>轮环</title>
+	<link rel="stylesheet" href="css/css.css" />
+	
+	<!--[if lt IE 9]>
+		<script src="js/html5shiv.min.js"></script>
+		<script src="js/respond.min.js"></script>
+		<div style="color:red; text-align:center;background:#FF8200; color:#fff" >您的IE版本过低,请升级您的浏览器版本！</div>
+	<![endif]-->
+</head>
+
+<body >
+	<div class="min1200 container">
+		<div class="homeInfobanner">
+			<div class="swiper-container homeInfoSwiper margin0 pull-left" id="homeInfoSwiper">
+				<div class="swiper-wrapper"></div>
+			</div>
+			<div class="swiper-container rightSwiper margin0 pull-right" id="rightSwiper">
+				<div class="swiper-wrapper"></div>
+				
+				<!--上下按钮-->
+				<button type="button" class="btn buttonUp"   id="buttonUp" style="display: none;"><i class="glyphicon glyphicon-menu-up"></i></button>
+				<button type="button" class="btn buttonDown"   id="buttonDown" style="display: none;"><i class="glyphicon glyphicon-menu-down"></i></button>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="js/require.js"  data-main="js/main"></script>
+<script type="text/javascript">
+	
+	require(['main'],function(){//配置模块依赖
+	    require(['swiper','jqzoom','app'],function(swiper,jqzoom,$app){
+	    	
+	    	
+		    	//ajax 回来的 banner数据
+		    	//根据回来的 数据已经做了判断 大于5条，就触发轮环
+		    	var imgArray=[
+		    		'img/test/a01.jpg',
+		    		'img/test/a02.jpg',
+		    		'img/test/a03.jpg',
+		    		'img/test/a04.jpg',
+		    		'img/test/a05.jpg',
+		    		'img/test/a06.jpg'
+		    	];
+		    	//右侧图是否循环
+		    	var rightLoop='';
+		    	if(imgArray.length>5){
+		    		rightLoop=true;
+		    		$('#rightSwiper').find('button').show();//按钮 显示
+		    	}else{
+		    		rightLoop=false;
+		    		$('#rightSwiper').find('button').hide();//按钮 隐藏
+		    	}
+		    	
+		    	var htmlK='';//主图
+		    	var htmlD='';//右侧图
+		    	imgArray.forEach(function(val,i){
+		    		htmlK+='<div class="swiper-slide imgRadius jqzoom"><img src=\"'+val+'\" data-img=\"'+val+'\"/></div>';
+		    		var active = (i==0?'active':'');
+		    		htmlD+='<div class=\"swiper-slide '+active+'\" data-xu=\"'+i+'\"><img src=\"'+val+'\"/></div>';
+		    	});
+		    	$('#homeInfoSwiper').children('.swiper-wrapper').html(htmlK);//主图 插入节点
+		    	$('#rightSwiper').children('.swiper-wrapper').html(htmlD);//右侧图 插入节点
+		    	
+		    	
+		    	
+		    	
+		    	// 主图 swiper实例化
+		    	var homeInfoSwiper = $('#homeInfoSwiper').swiper({
+		        loop: false,
+				// 鼠标拖动 false无效
+				simulateTouch : false,
+			    grabCursor: false,//鼠标不产生手型
+			    //swiper方向 默认水平horizontal
+			    mode:'vertical'
+			});
+			
+			//右侧栏 swiper实例化
+			var rightSwiper = $('#rightSwiper').swiper({
+		        loop: rightLoop,//循环
+		        // 分5栏 每次移动5列
+			    slidesPerView :5,
+			    slidesPerGroup : 1,
+				// 鼠标拖动 false无效
+				simulateTouch : false,
+			    grabCursor: false,//鼠标不产生手型
+			    //swiper方向 默认水平horizontal
+			    mode:'vertical',
+			    // 鼠标滚轮触发滚动监听 true有效
+				mousewheelControl : false
+			});
+			
+			$('.swiper-container').show();//swiper显示
+			
+			//右侧栏点击 banner交互
+			$('#rightSwiper').on('click','.swiper-slide-visible',function(){
+
+				var xu=$(this).data('xu');//获取序号
+				console.log('xu = ',xu)
+				
+				//增加高亮框
+				$(this).addClass('active');
+				var siblings=$(this).siblings();
+				siblings.each(function(i,val){
+					var sibXu=$(val).data('xu');
+					if(sibXu==xu){
+						$(val).addClass('active');
+					}else{
+						$(val).removeClass('active');
+					}
+				});
+				
+				//主内容 滑动到对应序号区块
+				homeInfoSwiper.swipeTo(xu);
+			});
+			
+			//上下按钮
+			$('#rightSwiper').on('click','button',function(){
+				if($(this).hasClass('buttonUp')){//上
+					rightSwiper.swipePrev();
+				}else if($(this).hasClass('buttonDown')){//下
+					rightSwiper.swipeNext();
+				}
+				return false;
+			});
+			
+			//放大镜组件
+			$(".jqzoom").jqzoom({
+				xzoom: 422,
+			    yzoom: 422, 
+			    offset: 20
+			});
+			
+			
+			
+		});
+    });
+    
+    
+   
+	
+</script>
+</html>

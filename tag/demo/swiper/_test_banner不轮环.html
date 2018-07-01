@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+	<meta name="renderer" content="webkit|ie-comp">
+	<meta name="keywords" content="XXXX|XX|XXX|XXX|XXX" />
+	<meta name="description" content="关键词描述XXXX" />
+	<title>不轮环</title>
+	<link rel="stylesheet" href="css/css.css" />
+	
+	<!--[if lt IE 9]>
+		<script src="js/html5shiv.min.js"></script>
+		<script src="js/respond.min.js"></script>
+		<div style="color:red; text-align:center;background:#FF8200; color:#fff" >您的IE版本过低,请升级您的浏览器版本！</div>
+	<![endif]-->
+</head>
+
+<body style="margin: 50px;">
+	
+	<div class="min1200 container">
+		<div class="row">
+			<div class="col-xs-8 paddingR0">
+				<div class="homeInfobanner">
+					<div class="swiper-container homeInfoSwiper margin0 pull-left" id="homeInfoSwiper">
+						<div class="swiper-wrapper">
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a01.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a02.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a03.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a04.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a05.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a06.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a01.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a02.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a03.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a04.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a05.jpg"/>
+						    </div>
+						    <div class="swiper-slide imgRadius">
+						    	<img src="img/test/a06.jpg"/>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-container rightSwiper margin0 pull-right" id="rightSwiper">
+						<div class="swiper-wrapper">
+						    <div class="swiper-slide active">
+						    	<img src="img/test/a01.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a02.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a03.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a04.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a05.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a06.jpg"/>
+						    </div>
+						    <div class="swiper-slide ">
+						    	<img src="img/test/a01.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a02.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a03.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a04.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a05.jpg"/>
+						    </div>
+						    <div class="swiper-slide">
+						    	<img src="img/test/a06.jpg"/>
+						    </div>
+						</div>
+						
+						<!--上下按钮-->
+						<button type="button" class="btn buttonUp" disabled id="buttonUp"><i class="glyphicon glyphicon-menu-up"></i></button>
+						<button type="button" class="btn buttonDown" disabled id="buttonDown"><i class="glyphicon glyphicon-menu-down"></i></button>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+				
+	</div>
+	
+	
+	
+	
+
+</body>
+
+<script type="text/javascript" src="js/require.js"  data-main="js/main"></script>
+<script type="text/javascript">
+	
+	require(['main'],function(){//配置模块依赖
+	    require(['swiper','app'],function(swiper,$app){
+	    	//swiper显示
+	    	$('.swiper-container').show();
+	    	
+	    	var homeInfoSwiper = $('#homeInfoSwiper').swiper({
+		        loop: false,
+				// 鼠标拖动 false无效
+				simulateTouch : false,
+			    grabCursor: false,//鼠标不产生手型
+			    //swiper方向 默认水平horizontal
+			    mode:'vertical'
+			});
+			
+			var nav_slide=$('#rightSwiper').find('.swiper-slide');
+			var nav_slide_first=nav_slide.first();
+			var nav_slide_last=nav_slide.last();
+			
+			//右侧栏
+			var rightSwiper = $('#rightSwiper').swiper({
+		        loop: false,
+		        // 分5栏 每次移动5列
+			    slidesPerView :5,
+			    slidesPerGroup : 5,
+				// 鼠标拖动 false无效
+				simulateTouch : false,
+			    grabCursor: false,//鼠标不产生手型
+			    //swiper方向 默认水平horizontal
+			    mode:'vertical',
+			    // 鼠标滚轮触发滚动监听 true有效
+				mousewheelControl : true,
+				onSlideChangeStart: function(e){//swiper 改变的时候触发
+					if(!nav_slide_first.hasClass('swiper-slide-visible')){//上
+						$('#buttonUp').prop('disabled',false);
+					}else {
+						$('#buttonUp').prop('disabled',true);
+					}
+					
+					if(!nav_slide_last.hasClass('swiper-slide-visible')){//下
+						$('#buttonDown').prop('disabled',false);
+					}else {
+						$('#buttonDown').prop('disabled',true);
+					}
+			    }
+			});
+			
+			
+			//上下按钮初始化
+			if(!nav_slide_first.hasClass('swiper-slide-visible')){//上
+				$('#buttonUp').prop('disabled',false);
+			}
+			if(!nav_slide_last.hasClass('swiper-slide-visible')){//下
+				$('#buttonDown').prop('disabled',false);
+			}
+			
+			//banner交互
+			$('#rightSwiper').on('click','img',function(){
+				$(this).parent().addClass('active');
+				$(this).parent().siblings().removeClass('active');
+				
+				var xu=$(this).parent().index();
+				//主内容 滑动到对应序号区块
+				homeInfoSwiper.swipeTo(xu);
+			});
+			
+			//上下按钮
+			$('#rightSwiper').on('click','button',function(){
+				if($(this).hasClass('buttonUp')){//上
+					rightSwiper.swipePrev();
+				}else if($(this).hasClass('buttonDown')){//下
+					rightSwiper.swipeNext();
+				}
+				return false;
+			});
+			
+		});
+    });
+    
+    
+   
+	
+</script>
+</html>

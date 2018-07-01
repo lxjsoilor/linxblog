@@ -1,0 +1,37 @@
+/*jQzoom*/
+
+.jqzoom {
+	float: left;
+	position: relative;
+	padding: 0px;
+	cursor: pointer;
+}
+
+.zoomdiv {
+	z-index: 21;
+	position: absolute;
+	background: #ffffff;
+	border: 1px solid #CCCCCC;
+	display: none;
+	text-align: center;
+	overflow: hidden;
+	max-width: none;
+}
+.zoomdiv img{max-width: none;}
+
+.jqZoomPup {
+	z-index: 9;
+	visibility: hidden;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 50px;
+	height: 50px;
+	border: 1px solid #aaa;
+	background: white;
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	filter: alpha(Opacity=50);
+}
+

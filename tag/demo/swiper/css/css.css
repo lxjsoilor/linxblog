@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/********************************
+ * 模块化加载css power by 一代聪师
+ ********************************/
+
+/*公共库*/
+@import "./bootstrap.css";
+@import "./font-awesome.min.css";
+
+/*主样式表*/
+@import "./basie.css";

@@ -177,13 +177,18 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
                         <div class="tags">
-                            <a class="tag" href="javascript:;" title="js">Js</a>
-                            <a class="tag" href="javascript:;" title="canvas">Canvas</a>
-                            <a class="tag" href="javascript:;" title="canvas">cocos</a>
-                        </div>
-                        <h1>游戏练习集合</h1>
 
-                        <!-- <h2 class="subheading">vue2+vuex+vue-router+webpack+ES6</h2> -->
+                            <a class="tag" href="javascript:;" title="静态">npm</a>
+
+                            <a class="tag" href="javascript:;" title="实例">nrm</a>
+
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
+
+                        </div>
+                        <h1>多图banner演示+放大镜</h1>
+
+
+                        <!-- <h2 class="subheading">vue虚拟dom的概念</h2> -->
 
                         <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
@@ -199,11 +204,17 @@
                 <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
-                post-container" style="padding:0">
+                post-container">
                     <style>
+                        dd {
+                            text-indent: 2em;
+                        }
+                    </style>
+                     <style>
                         #appdemo {
                             width: 830px;
-                            height: 700PX;
+                            height: 500PX;
+                            overflow: hidden;
                         }
                         
                         iframe {
@@ -214,51 +225,22 @@
                             border: none;
                         }
                     </style>
-                    <p>
-                        游戏练习集合
-                    </p>
-
-                    <div id="appdemo">
-                        <a href="https://lxjsoilor.github.io/zombie/index.html">原生JS双人游戏</a>
-                        <iframe src="./demo/zombiemin/index.html"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myRunCool/">cocos creator练习</a></p>
-
-                    <div id="appdemo" style="height:400px">
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myRunCool/"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myBall/">cocos creator练习</a></p>
-
-                    <div id="appdemo" style="height:900px">
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myBall/"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/3DMine/index.html">原生JS3D扫雷制作</a></p>
-
-                    <div id="appdemo" style="height:900px">
-
-                        <iframe src="https://lxjsoilor.github.io/3DMine/index.html"></iframe>
-                    </div>
-
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myTiledMap/">瓦片游戏练习</a></p>
-                    <div id="appdemo" style="height:900px">
-
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myTiledMap/"></iframe>
-                    </div>
-
-
-
-                    <div id="appdemo">
-                        <iframe src="./demo/flybrid/index.html"></iframe>
-                    </div>
+                    <script src="../js/vue.js"></script>
+                    <h2>多图banner演示+放大镜</h2>
                     <!--  -->
+                    <h4><a href="javascript:;">banner不循环</a></h4>
+                    <div id="appdemo">
+                        <iframe src="./demo/swiper/_test_banner不轮环.html"></iframe>
+                    </div>
+                    <h4><a href="javascript:;">banner循环</a></h4>
+                    <div id="appdemo">
+                        <iframe src="./demo/swiper/_test_banner轮环.html"></iframe>
+                    </div>
+                    <h4><a href="javascript:;">banner循环 + 放大镜</a></h4>
+                    <div id="appdemo">
+                        <iframe src="./demo/swiper/_test_banner轮环+放大镜.html"></iframe>
+                    </div>
                     <hr style="visibility: hidden;">
-
-
-
                 </div>
 
                 <!-- Side Catalog Container -->
@@ -284,19 +266,30 @@
                 col-md-10 col-md-offset-1
                 sidebar-container">
 
+
                     <hr>
                     <h5>FRIENDS</h5>
                     <ul class="list-inline">
+<!-- 
+                        <li><a href="http://mida.re/">乱序</a></li>
 
-                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
 
-                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
 
-                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+                        <li><a href="https://hmqk1995.github.io">Luke 的自留地</a></li>
 
-                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
 
-                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+                        <li><a href="https://blog.smdcn.net">SmdCn's Blog</a></li>
+
+                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+
+                        <li><a href="http://dhong.co">DHong Say</a></li>
+
+                        <li><a href="https://ingf.github.io/">尹峰以为</a></li>
+
+                        <li><a href="https://wepiaofei.github.io/blog/">前端神盾局</a></li> -->
 
                     </ul>
 
@@ -346,17 +339,7 @@
             s.parentNode.insertBefore(o, s);
         }
     </script>
-    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-    <!-- <script>
-        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
-            anchors.options = {
-                visible: 'always',
-                placement: 'right',
-                icon: '#'
-            };
-            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-        })
-    </script> -->
+
     <style>
         /* place left on bigger screen */
         
@@ -377,7 +360,11 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-
+                    <!-- <p class="copyright text-muted">
+                        Copyright &copy; Hux Blog 2017
+                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
+                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
+                    </iframe> -->
                     </p>
                 </div>
             </div>
@@ -387,19 +374,12 @@
     <!-- jQuery -->
     <script src="../js/jquery.min.js "></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
     <script src="../js/bootstrap.min.js "></script>
 
-    <!-- Custom Theme JavaScript -->
     <script src="../js/hux-blog.min.js "></script>
-
-    <!-- Service Worker -->
 
     <script src="../js/snackbar.js "></script>
     <script src="../js/sw-registration.js "></script>
-
-
 
 </body>
 

@@ -177,13 +177,18 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
                         <div class="tags">
-                            <a class="tag" href="javascript:;" title="js">Js</a>
-                            <a class="tag" href="javascript:;" title="canvas">Canvas</a>
-                            <a class="tag" href="javascript:;" title="canvas">cocos</a>
-                        </div>
-                        <h1>游戏练习集合</h1>
 
-                        <!-- <h2 class="subheading">vue2+vuex+vue-router+webpack+ES6</h2> -->
+                            <a class="tag" href="javascript:;" title="vue">vue</a>
+
+                            <a class="tag" href="javascript:;" title="组件通讯">vuex</a>
+
+                            <!-- <a class="tag" href="javascript:;" title="Linux">Ps</a> -->
+
+                        </div>
+                        <h1>vue复习：vuex的使用</h1>
+
+
+                        <!-- <h2 class="subheading">vue虚拟dom的概念</h2> -->
 
                         <!-- <span class="meta">Posted by Hux on April 14, 2015</span> -->
                     </div>
@@ -199,66 +204,67 @@
                 <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
-                post-container" style="padding:0">
+                post-container">
                     <style>
-                        #appdemo {
-                            width: 830px;
-                            height: 700PX;
-                        }
-                        
-                        iframe {
-                            width: 100%;
-                            height: 100%;
-                            display: inline-block;
-                            overflow: hidden;
-                            border: none;
+                        dd {
+                            text-indent: 2em;
                         }
                     </style>
-                    <p>
-                        游戏练习集合
-                    </p>
+                    <script src="../js/vue.js"></script>
+                    <h2>vuex的使用</h2>
+                    <p>在小项目中，对于组件间数据的传递一个全局事件总线（Bus.js）就可以解决，但是对于更加复杂的项目，就有了vuex这个大而全的状态管理工具，我自己的理解就是一个更加全面和更加容易维护的‘事件总线’;</p>
+                    <p>假设已经用vue脚手架工具构建好了项目；那么可以开始使用去引入vuex并使用它；</p>
+                    <p>1.利用包管理器npm安装vuex；</p>
+                    <img src="../img/vue/vuex_01.png" alt="">
+                    <p>2.新建一个store.js，这个文件里面将用来存储各个组件传递的数据还有操作数据的方法；</p>
+                    <img src="../img/vue/vuex_02.png" alt="">
+                    <p>3.在store.js中输出vuex.Store对象的实例化；</p>
+                    <img src="../img/vue/vuex_03.png" alt="">
+                    <p>4.之后我们在main.js中引入并且配置好我们要使用的vuex；</p>
+                    <img src="../img/vue/vuex_04.png" alt="">
+                    <p>5.接下来就可以开始使用vuex了，vuex有5个核心概念分别是State，Getter，Mutation，Action，Module；</p>
+                    <h5><a href="javascript:;">A.State：</a></h5>
+                    <p>Vuex这个属性将会存储着各个组件可能都会用到的数据；就好像localStorage，存储的是各个页面的共享数据；</p>
+                    <img src="../img/vue/vuex_05.png" alt="">
+                    <p>在组件中我们可以通过this.$store.state.[数据名称]来显示这里面的数据，也可以写到computed计算属性里面：</p>
+                    <img src="../img/vue/vuex_06.png" alt="">
+                    <p>还可以通过mapState的使用更加简单来取到state里面的数据：</p>
+                    <img src="../img/vue/vuex_07.png" alt="">
+                    <p>然后只需要在计算属性里面加入：</p>
+                    <img src="../img/vue/vuex_08.png" alt="">
+                    <h5><a href="javascript:;">B.Mutations：</a></h5>
+                    
+                    <p>Mutations意思是改变的意思，我们在操作state里面的数据的时候可以简单的使用$store.state =另外的数据；这种方法也可以达到更新页面的效果，但是vuex为我们提供更规范的写法来操作state：</p>
+                    <img src="../img/vue/vuex_09.png" alt="">
+                    <p>之后我们是在组件上通过this.$store.commit(‘mutations里面的方法名称’)来触发相应的函数来达到更新state的目的；</p>
+                    <p>因为每次写this.$store.commit很浪费时间，所以vuex也提供对应的方法：mapMutations;</p>
+                    <img src="../img/vue/vuex_10.png" alt="">
+                    <h5><a href="javascript:;">C.Getters:</a></h5>
+                    <p>Getters意思是获取的意思，在vuex中的作用是在获取数据之前对数据进行加工处理后输出。</p>
+                    <p>基本用法：</p>
+                    <img src="../img/vue/vuex_11.png" alt="">
+                    <img src="../img/vue/vuex_12.png" alt="">
+                    <p>之后可以在页面上通过this.$store.getters.方法名；如果需要传参就需要this.$store.getters.方法名(参数)；</p>
+                    <p>Getters也是有对应的mapGetters方法来简化代码：</p>
+                    <img src="../img/vue/vuex_13.png" alt="">
+                    <h5><a href="javascript:;">D.Actions:</a></h5>
+                    <p>Actions和Mutations功能基本是一样的，但是actions是异步的改变state状态，而mutations是同步的改变状态。就是说当mutations里面的方法很复杂，执行时间久的话是会阻塞程序的运行，而actions是异步的所以就不会；</p>
+                    <p>Actions操作的是mutation，而出发action则通过this.$store.dispatch(‘方法名’)来调用；</p>
+                    <img src="../img/vue/vuex_14.png" alt="">
+                    <p>通过mapActions来简化代码：</p>
 
-                    <div id="appdemo">
-                        <a href="https://lxjsoilor.github.io/zombie/index.html">原生JS双人游戏</a>
-                        <iframe src="./demo/zombiemin/index.html"></iframe>
-                    </div>
+                    <img src="../img/vue/vuex_15.png" alt="">
+                    <h5><a href="javascript:;">E. Module:</a></h5>
+                    <p>Module是模块的意思，当我们的项目很大很复杂的时候，state中存储的状态也会变得非常多；</p>
+                    <p>使用方法：</p>
+                    <img src="../img/vue/vuex_16.png" alt="">
+                    <p>配置完后，其他所说的操作数据的方法都要加上模块名称：
+                    如：</p>
+                    <img src="../img/vue/vuex_17.png" alt="">
+                    <h2>以上就是vuex的内容！！</h2>
 
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myRunCool/">cocos creator练习</a></p>
-
-                    <div id="appdemo" style="height:400px">
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myRunCool/"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myBall/">cocos creator练习</a></p>
-
-                    <div id="appdemo" style="height:900px">
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myBall/"></iframe>
-                    </div>
-
-                    <p><a href="https://lxjsoilor.github.io/3DMine/index.html">原生JS3D扫雷制作</a></p>
-
-                    <div id="appdemo" style="height:900px">
-
-                        <iframe src="https://lxjsoilor.github.io/3DMine/index.html"></iframe>
-                    </div>
-
-
-                    <p><a href="https://lxjsoilor.github.io/cocosGame/myTiledMap/">瓦片游戏练习</a></p>
-                    <div id="appdemo" style="height:900px">
-
-                        <iframe src="https://lxjsoilor.github.io/cocosGame/myTiledMap/"></iframe>
-                    </div>
-
-
-
-                    <div id="appdemo">
-                        <iframe src="./demo/flybrid/index.html"></iframe>
-                    </div>
                     <!--  -->
                     <hr style="visibility: hidden;">
-
-
-
                 </div>
 
                 <!-- Side Catalog Container -->
@@ -284,19 +290,30 @@
                 col-md-10 col-md-offset-1
                 sidebar-container">
 
+
                     <hr>
                     <h5>FRIENDS</h5>
                     <ul class="list-inline">
+<!-- 
+                        <li><a href="http://mida.re/">乱序</a></li>
 
-                        <li><a href="https://www.awesomes.cn/">awesomes</a></li>
+                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
 
-                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript MDN</a></li>
+                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
 
-                        <li><a href="http://www.jq22.com/chm/jquery1.8.3.html">JavaScript MDN</a></li>
+                        <li><a href="https://hmqk1995.github.io">Luke 的自留地</a></li>
 
-                        <li><a href="http://www.wheelsfactory.cn/#/home">Vue组件-轮子工厂</a></li>
+                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
 
-                        <li><a href="http://www.jq22.com/">Jquery插件库</a></li>
+                        <li><a href="https://blog.smdcn.net">SmdCn's Blog</a></li>
+
+                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+
+                        <li><a href="http://dhong.co">DHong Say</a></li>
+
+                        <li><a href="https://ingf.github.io/">尹峰以为</a></li>
+
+                        <li><a href="https://wepiaofei.github.io/blog/">前端神盾局</a></li> -->
 
                     </ul>
 
@@ -346,17 +363,7 @@
             s.parentNode.insertBefore(o, s);
         }
     </script>
-    <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-    <!-- <script>
-        async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js", function() {
-            anchors.options = {
-                visible: 'always',
-                placement: 'right',
-                icon: '#'
-            };
-            anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-        })
-    </script> -->
+
     <style>
         /* place left on bigger screen */
         
@@ -377,7 +384,11 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-
+                    <!-- <p class="copyright text-muted">
+                        Copyright &copy; Hux Blog 2017
+                        <br> Theme by <a href="http://huangxuan.me">Hux</a> |
+                        <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true">
+                    </iframe> -->
                     </p>
                 </div>
             </div>
@@ -387,19 +398,12 @@
     <!-- jQuery -->
     <script src="../js/jquery.min.js "></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
     <script src="../js/bootstrap.min.js "></script>
 
-    <!-- Custom Theme JavaScript -->
     <script src="../js/hux-blog.min.js "></script>
-
-    <!-- Service Worker -->
 
     <script src="../js/snackbar.js "></script>
     <script src="../js/sw-registration.js "></script>
-
-
 
 </body>
 
